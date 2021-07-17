@@ -74,7 +74,7 @@ const Welcome = React.memo(({ prefix, getUserData, config, ...restProps }) => {
       <div className={`${currentPrefix}-welcome-header-logo`}>{}</div>
       <div className={`${currentPrefix}-welcome-header-name`}>
         <div>元数建模</div>
-        <div>SINER</div>
+        <div>CHINER</div>
       </div>
     </div>
     <div className={`${currentPrefix}-welcome-body`}>

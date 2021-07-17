@@ -54,26 +54,26 @@ const Table = forwardRef(({node}, ref) => {
   };
   return <div
     ref={ref}
-    className='siner-er-table'
+    className='chiner-er-table'
     onDragOver={onDragOver}
     onDrop={onDrop}
     style={{color: node.getProp('fontColor')}}
   >
     <div
-      className='siner-er-table-header'
+      className='chiner-er-table-header'
       style={{background: node.getProp('fillColor')}}
     >
       {`${getTitle()}${store?.data.count > 0 ? `:${store?.data.count}` : ''}`}
     </div>
     <div
-      className='siner-er-table-body'
+      className='chiner-er-table-body'
       style={{background: calcColor()}}
     >
       {
         data.fields.map((f) => {
           return <div
             key={`${f.defKey}${f.defName}`}
-            className={`${validateSelected(f, store.data) ? 'siner-er-table-body-selected' : ''} ${f.primaryKey ? 'siner-er-table-body-primary' : ''}`}>
+            className={`${validateSelected(f, store.data) ? 'chiner-er-table-body-selected' : ''} ${f.primaryKey ? 'chiner-er-table-body-primary' : ''}`}>
             {
               data.headers.map((h) => {
                 return <span

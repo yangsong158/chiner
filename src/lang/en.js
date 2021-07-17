@@ -1,6 +1,6 @@
 export default {
     system: {
-        title: 'siner',
+        title: 'chiner',
         template: 'The current project is a template project',
         err: 'Error',
         errorMessage: 'The program is abnormal. Please go to the log file to check the error log',

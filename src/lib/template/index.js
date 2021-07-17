@@ -1,5 +1,5 @@
-import student from './教学管理系统.sinoper.json';
-import retailers from './电商商城.sinoper.json';
+import student from './教学管理系统.chnr.json';
+import retailers from './电商商城.chnr.json';
 
 export {
   student,

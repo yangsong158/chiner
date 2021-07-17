@@ -10,8 +10,7 @@ const getProjectName = (path = '') => {
   // 1.不同的操作系统文件名的分隔符不同 此处需要统一转化为'\'
   const realPath = path.replace('/', '\\');
   const paths = realPath.split('\\');
-  const suffix = path.endsWith('sinoper.json') ? 'sinoper' : projectSuffix;
-  return paths[paths.length - 1].split(`.${suffix}.json`)[0];
+  return paths[paths.length - 1].split(`.${projectSuffix}.json`)[0];
 };
 
 export const generateFile = (fileType, dataSource, projectInfo) => {

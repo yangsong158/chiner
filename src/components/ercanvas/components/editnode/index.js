@@ -18,7 +18,7 @@ const EditNode = forwardRef(({node}, ref) => {
   }, [editable]);
   return <div
     ref={ref}
-    className={`siner-er-editnode ${node.shape === 'edit-node-circle' ? 'siner-er-editnode-circle' : ''}`}
+    className={`chiner-er-editnode ${node.shape === 'edit-node-circle' ? 'chiner-er-editnode-circle' : ''}`}
     style={{
       background: node.getProp('fillColor'),
       color: node.getProp('fontColor'),

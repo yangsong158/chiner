@@ -146,6 +146,10 @@ export default React.memo(({prefix, importProject, createProject, openTemplate,
       </span>
     </div>;
   };
+  const openUrl = () => {
+    // eslint-disable-next-line global-require,import/no-extraneous-dependencies
+    require('electron').shell.openExternal('https://www.wjx.cn/vj/PIZj3DI.aspx');
+  };
   return <div className={`${currentPrefix}-home-container`}>
     <div className={`${currentPrefix}-home-toolbar`}>
       <ToolBar resizeable title={FormatMessage.string({id: 'system.title'})}/>
@@ -215,8 +219,16 @@ export default React.memo(({prefix, importProject, createProject, openTemplate,
         </div>
         <div className={`${currentPrefix}-home-container-body-right-list`}>
           <div>
-            <div className={`${currentPrefix}-home-container-body-right-list-title`}>
-              <FormatMessage id='home.allProject'/>
+            <div className={`${currentPrefix}-home-container-body-right-ad-container`}>
+              <div className={`${currentPrefix}-home-container-body-right-list-title`}>
+                <FormatMessage id='home.allProject'/>
+              </div>
+              <div onClick={openUrl} className={`${currentPrefix}-home-container-body-right-ad`}>
+                <Icon type='fa-bullhorn'/>
+                <span>
+                  企业版预订登记，前999名，享受最低三折起折扣优惠
+                </span>
+              </div>
             </div>
             <div className={`${currentPrefix}-home-container-body-right-list-tab`}>
               <div className={`${currentPrefix}-home-container-body-right-list-tab-header`}>

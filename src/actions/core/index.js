@@ -349,9 +349,8 @@ export const renameProject = (newData, oldData, title) => {
   return (dispatch, getState) => {
     dispatch(openLoading(title));
     // 1.需要调整项目文件 先新建 再删除
-    const suffix = oldData.path.endsWith('.sinoper.json') ? 'sinoper' : projectSuffix;
-    const oldFilePath = dirSplicing(oldData.path, `${oldData.name}.${suffix}.json`);
-    const newFilePath = dirSplicing(newData.path, `${newData.name}.${suffix}.json`);
+    const oldFilePath = dirSplicing(oldData.path, `${oldData.name}.${projectSuffix}.json`);
+    const newFilePath = dirSplicing(newData.path, `${newData.name}.${projectSuffix}.json`);
     const config = getState()?.config?.data[0];
     if (fileExists(newFilePath) && (oldFilePath !== newFilePath)) {
       dispatch(closeLoading(STATUS[2], allLangData[config.lang].createProjectExists));

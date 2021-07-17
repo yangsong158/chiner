@@ -252,7 +252,6 @@ export const openProjectFilePath = (errorFileMessage, suffix) => {
     // mac 下无法识别XXX.json为后缀的文件
     extensions.push('json');
   } else {
-    extensions.push('sinoper.json');
     extensions.push(`${tempSuffix}.json`);
   }
   return new Promise((res, rej) => {
@@ -364,9 +363,9 @@ export const connectDB = (dataSource, params = {}, cmd, cb) => {
   const javaHome = _.get(dataSource, 'profile.javaHome', '');
   let jar = '';
   if (process.env.NODE_ENV === 'development') {
-    jar = `${process.cwd()}${path.sep}public${path.sep}jar${path.sep}siner-java.jar`;
+    jar = `${process.cwd()}${path.sep}public${path.sep}jar${path.sep}chiner-java.jar`;
   } else {
-    jar = `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}jar${path.sep}siner-java.jar`
+    jar = `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}jar${path.sep}chiner-java.jar`
   }
   const tempValue = javaHome ? `${javaHome}${path.sep}bin${path.sep}java` : 'java';
   const customerDriver = _.get(params, 'customer_driver', '');
@@ -450,14 +449,14 @@ export const saveTempImages = (images) => {
 
 const getDefaultWordTemplate = () => {
   if (process.env.NODE_ENV === 'development') {
-    return `${process.cwd()}${path.sep}public${path.sep}file${path.sep}siner-docx-tpl.docx`;
+    return `${process.cwd()}${path.sep}public${path.sep}file${path.sep}chiner-docx-tpl.docx`;
   } else {
-    return `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}file${path.sep}siner-docx-tpl.docx`
+    return `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}file${path.sep}chiner-docx-tpl.docx`
   }
 }
 
 export const saveAsWordTemplate = () => {
-  return copyFile(getDefaultWordTemplate(), [{name: 'siner-docx-tpl', extensions: ['docx']}]);
+  return copyFile(getDefaultWordTemplate(), [{name: 'chiner-docx-tpl', extensions: ['docx']}]);
 };
 
 export const selectWordFile = (dataSource) => {

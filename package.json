@@ -1,7 +1,7 @@
 {
-  "name": "siner",
+  "name": "chiner",
   "version": "3.0.0",
-  "description": "SINER-元数建模",
+  "description": "CHINER-元数建模",
   "main": "build/main.js",
   "scripts": {
     "test": "jest",
@@ -93,8 +93,8 @@
     "webpack-dev-server": "2.11.1"
   },
   "build": {
-    "appId": "siner",
-    "productName": "SINER-元数建模",
+    "appId": "chiner",
+    "productName": "CHINER元数建模",
     "artifactName": "${productName}-${os}_v${version}.${ext}",
     "directories": {
       "buildResources": "build",

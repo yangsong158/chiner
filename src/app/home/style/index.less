@@ -87,6 +87,24 @@
         box-shadow: -2px 0 15px 0 rgba(146, 161, 170, 0.1);
         display: flex;
         flex-direction: row;
+        &-ad {
+          flex-grow: 1;
+          text-align: center;
+          line-height: 44px;
+          cursor: pointer;
+          &-container {
+            display: flex;
+            flex-direction: row;
+          }
+          i {
+            color: @danger-color;
+          }
+          span {
+            margin-left: 10px;
+            color: @primary-color;
+            text-decoration: underline;
+          }
+        }
         &-nav {
           height: 100%;
           width: 200px;
@@ -131,7 +149,7 @@
           &-title {
             font-size: 18px;
             font-weight: bold;
-            width: 100%;
+            //width: 100%;
             height: 44px;
             line-height: 44px;
           }
