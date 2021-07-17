@@ -1,0 +1,70 @@
+@import "~style";
+
+.@{prefix}-relation-editor {
+  padding: 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &-right {
+    margin-left: 10px;
+  }
+  &-open-entity {
+    text-align: center;
+  }
+}
+.@{prefix}-relation {
+  &-container {
+    outline: none;
+    position: relative;
+  }
+  &-title {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+  }
+}
+.minmap-container {
+  overflow: hidden;
+  position: absolute;
+  left: 0;
+  top: 24px;
+  height: 210px;
+  padding: 5px;
+  background: #FFFFFF;
+}
+.minmap-view {
+  top: 7.5px;
+  left: 7.5px;
+  width: 200px;
+  height: 200px;
+  border: 1px solid rgba(0,0,0,.1);
+  position: absolute;
+  margin: -2px 0 0 -2px;
+  cursor: move;
+
+}
+.minmap-canvas {
+
+}
+.ercanvas-menus {
+  outline: none;
+  position: fixed;
+  background: @primary-border-color;
+  ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    li {
+      user-select: none;
+      padding: 2.5px 5px;
+      cursor: pointer;
+    }
+    li:hover {
+      color: @background-color;
+    }
+  }
+}
+.x6-graph-scroller.x6-graph-scroller-pannable {
+  cursor: default;
+}

@@ -1,0 +1,88 @@
+@import "~style";
+
+.@{prefix}-group-icon {
+  position: relative;
+  font-size: 11px;
+  &-disable {
+    .@{prefix}-head-rect {
+      & > span {
+        border: 1px solid @third-font-color;
+      }
+    }
+    color: @third-font-color;
+    &:hover {
+      cursor: not-allowed !important;
+    }
+  }
+  &:hover {
+    cursor: pointer;
+    background: @search-bg-color;
+  }
+  span[class*=-svg-icon] {
+    width: 16px;
+    height: 16px;
+  }
+  i {
+    font-size: 16px;
+  }
+  &-title {
+    text-align: center;
+    margin-top: 2px;
+  }
+  user-select: none;
+  height: @toolbar-height;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  &-group {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    & > div {
+      padding: 6px;
+    }
+    padding: 0 8px;
+    //border-right: 1px solid rgba(0,0,0,0.15);
+  }
+  &-top {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    & > i + i {
+      padding-left: 2px;
+      border-left: 1px solid @primary-border-color;
+    }
+  }
+  &-container {
+    &-drop {
+      align-items: unset;
+    }
+    &-nodrop {
+      align-items: center;
+    }
+  }
+  &-drop {
+    margin-left: 2px;
+  }
+  &-menu {
+    &-nobackground {
+      background: unset;
+    }
+    &-showbackground {
+      background: @background-color;
+    }
+    display: none;
+    position: absolute;
+    padding: 5px;
+    left: 32px;
+    top: 20px;
+    z-index: 1;
+    &-item {
+      color: @background-hl;
+      width: 100px;
+      display: inline-block;
+    }
+  }
+}

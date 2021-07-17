@@ -1,0 +1,110 @@
+@import "~style";
+
+.@{prefix}-step {
+  height: 100%;
+  &-title {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    div:last-child {
+      flex-grow: 0;
+      span:last-child {
+        display: none;
+      }
+    }
+    &-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      span:nth-child(2){
+        padding: 5px;
+      }
+      &-line {
+        display: inline-block;
+        flex-grow: 1;
+        height: 2px;
+        background: @primary-color;
+        margin-right: 5px;
+      }
+      &-active {
+        flex-grow: 1;
+        justify-content: center;
+        span:first-child {
+          text-align: center;
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          color: @background-color;
+          background: @primary-color;
+          border-radius: 10px;
+          padding-right: 2px;
+        }
+        span:nth-child(2) {
+          font-weight: bold;
+        }
+      }
+      &-rest {
+        flex-grow: 1;
+        justify-content: center;
+        span:first-child {
+          text-align: center;
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          color: @primary-border-color;
+          border: 1px solid @primary-border-color;
+          background: @background-color;
+          border-radius: 10px;
+        }
+      }
+      &-done {
+        justify-content: right;
+        span:first-child {
+          text-align: center;
+          display: inline-flex;
+          width: 21px;
+          height: 21px;
+          color: @background-color;
+          background: @primary-color;
+          font-size: 22px;
+          border-radius: 10px;
+          justify-content: center;
+          align-items: center;
+          padding-bottom: 1px;
+        }
+        span:nth-child(2) {
+          font-weight: bold;
+        }
+      }
+      &-success {
+        flex-grow: 1;
+        justify-content: right;
+        span:first-child {
+          text-align: center;
+          display: inline-block;
+          width: 22px;
+          height: 22px;
+          color: @primary-color;
+          border: 1px solid @primary-color;
+          border-radius: 10px;
+        }
+      }
+    }
+  }
+  &-content {
+    height: calc(100% - 31px);
+    &-item {
+      &-active {
+        height: 100%;
+        display: block;
+        & > div {
+          height: 100%;
+        }
+      }
+      &-default {
+        display: none;
+      }
+    }
+  }
+}

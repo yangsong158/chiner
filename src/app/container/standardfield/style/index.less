@@ -1,0 +1,185 @@
+@import "~style";
+
+.@{prefix}-standard-fields {
+  &-list-select {
+    padding: 5px;
+    height: 60vh;
+  }
+  &-list {
+    &-empty {
+      font-size: 12px;
+      text-align: center;
+      width: 100%;
+    }
+    &-search {
+      display: inline-block;
+      width: 100%;
+    }
+    &-group {
+      display: inline-block;
+      width: 100%;
+      color: @primary-color;
+      & > span {
+        margin-left: 5px;
+      }
+    }
+    &-title {
+      text-align: left;
+      font-size: 14px;
+      font-weight: bold;
+      position: relative;
+      &-opt {
+        font-weight: normal;
+        border: 1px solid #DFE3EB;
+        border-radius: 2px;
+        display: inline-block;
+        height: 28px;
+        & > span {
+          position: relative;
+          & > i , span {
+            font-size: 11px;
+          }
+        }
+        & > span + span:before {
+          position: absolute;
+          content: " ";
+          width: 1px;
+          height: 60%;
+          top: 20%;
+          left: 0;
+          background-color: #DFE3EB;
+        }
+      }
+      &-help {
+        background: @background-color;
+        color: @font-color;
+        padding: 10px;
+      }
+      & > i + i {
+        margin-left: 5px;
+      }
+      i {
+        font-size: 12px;
+      }
+      &:before {
+        content: " ";
+        position: absolute;
+        width: 2px;
+        height: 50%;
+        left: 0;
+        top: 31%;
+        background: @font-color;
+      }
+      padding-left: 7px;
+      color: @font-color;
+    }
+    &-unfold {
+      box-shadow: 2px 0 15px 0 rgba(146, 161, 170, 0.1);
+      padding: 5px;
+      background: @background-color;
+      position: absolute;
+      right: 0;
+      top: 0;
+      height: calc(100% - 8px);
+      z-index: 100;
+      .@{prefix}-standard-fields-list-icon {
+        z-index: 100;
+        position: absolute;
+        right: 7px;
+        top: 7px;
+        background-color: @primary-border-color;
+        border-radius: 50%;
+        cursor: pointer;
+        width: 20px;
+        height: 22px;
+        color: @third-font-color;
+      }
+    }
+    &-fold {
+      position: absolute;
+      right: 3px;
+      top: 10px;
+      height: auto;
+      z-index: 100;
+    }
+    &-icon {
+      text-align: center;
+      cursor: pointer;
+      & > div {
+        width: 26px;
+        //height: 76px;
+        padding: 10px 0;
+        background-color: @primary-color;
+        color: @background-color;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        box-shadow: 0 2px 9px 0 rgba(89, 126, 247, 0.6), 0 1px 4px 0 rgba(255, 255, 255, 0.5);
+        border-radius: 13px;
+        opacity: 0.6;
+        filter: blur(0px);
+        & > span:first-child {
+          width: 13px;
+          height: 13px;;
+        }
+        & > span:last-child {
+          font-size: 12px;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          & > span + span {
+            margin-top: -4px;
+          }
+        }
+      }
+    }
+    &-content-selected {
+      background: @third-primary-color;
+      color: @primary-color;
+      padding: 2px 5px 2px 10px;
+    }
+    &-content-unselected {
+      padding: 2px 5px 2px 10px;
+    }
+    &-fold-content {
+      display: none;
+    }
+    &-unfold-content {
+      overflow: auto;
+      padding: 10px;
+      width: 300px;
+      min-width: 300px;
+      height: calc(100% - 42px);
+      & > div {
+        padding: 3px;
+      }
+    }
+  }
+  padding: 5px;
+  overflow: auto;
+  height: 60vh;
+  &-opt {
+    & > i + i {
+      margin-left: 5px;
+    }
+  }
+  &-group {
+    padding: 10px;
+    & > span {
+      width: 100%;
+      & > input {
+        width: 100%;
+      }
+    }
+  }
+  .@{prefix}-table-opt {
+    text-align: left;
+  }
+  table td i, table th i {
+    display: inline-block;
+  }
+  &-listselect {
+    height: 300px;
+  }
+}

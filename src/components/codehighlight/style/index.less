@@ -1,0 +1,23 @@
+@import "~style";
+
+.@{prefix}-code-highlight {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: @background-hl;
+  user-select: text;
+  text-align: left;
+  pre {
+    user-select: text;
+    transition: opacity 0.5s;
+  }
+  &-title {
+    user-select: none;
+    pointer-events: none;
+    left: 10px;
+    top: 0;
+    position: absolute;
+    color: @background-color;
+    transition: opacity 0.5s;
+  }
+}

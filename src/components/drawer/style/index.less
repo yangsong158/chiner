@@ -1,0 +1,37 @@
+@import "~style";
+
+.@{prefix}-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  height: 100%;
+  width: 100%;
+  background-color: @modal-color;
+  -webkit-app-region: no-drag;
+  &-container {
+    transform: translateX(-100%);
+    transition: transform .3s cubic-bezier(.7,.3,.1,1),box-shadow .3s cubic-bezier(.7,.3,.1,1);
+    width: @drawer-width;
+    height: 100%;
+    background: @background-color;
+  }
+  &-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding: 5px;
+    & > i {
+      cursor: pointer;
+    }
+  }
+  &-content {
+  }
+  &-button {
+    text-align: right;
+    padding-right: 5px;
+  }
+}

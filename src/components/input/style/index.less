@@ -1,0 +1,33 @@
+@import "~style";
+
+.@{prefix}-input {
+  display: flex !important;
+  flex-direction: row;
+  & > input {
+    line-height: 25px;
+    height: 25px;
+    padding: 5px 5px;
+    border: 1px solid @primary-border-color;
+    border-radius: 2px;
+    outline: none;
+    &:hover {
+      border: 1px solid @primary-color;
+    }
+    &:focus {
+      border: 1px solid @primary-color;
+      box-shadow: 0 0 0 2px @third-primary-color;
+    }
+  }
+  &-suffix {
+    &-container {
+      & > input {
+        border-radius: 2px 0 0 2px;
+      }
+    }
+    height: 25px;
+    cursor: pointer;
+    border-top: 1px solid @primary-border-color;
+    border-bottom: 1px solid @primary-border-color;
+    border-right: 1px solid @primary-border-color;
+  }
+}

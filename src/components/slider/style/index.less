@@ -1,0 +1,35 @@
+@import "~style";
+
+.@{prefix}-slider {
+  position: relative;
+  width: 100%;
+  &-disable {
+    cursor: not-allowed;
+    .@{prefix}-slider-handle {
+      cursor: not-allowed !important;
+    }
+    .@{prefix}-slider-track, .@{prefix}-slider-handle  {
+      background: @third-font-color;
+    }
+    .@{prefix}-slider-handle {
+      border: 2px solid @third-font-color;
+    }
+  }
+  &-track {
+    height: 3px;
+    background: @font-color;
+    width: 100%;
+  }
+  &-handle {
+    transform: translateX(-50%);
+    cursor: pointer;
+    position: absolute;
+    background: @background-color;
+    top: -4px;
+    left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid @font-color;
+  }
+}

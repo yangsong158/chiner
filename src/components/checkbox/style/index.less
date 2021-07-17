@@ -1,0 +1,61 @@
+@import "~style";
+
+.@{prefix}-checkbox {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  &-disable {
+    & > span:first-child {
+      cursor: not-allowed;
+    }
+    input {
+      cursor: not-allowed !important;
+    }
+    .@{prefix}-checkbox-checked {
+      color: @primary-border-color
+    }
+  }
+  &-checked {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    line-height: 14px;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    color: @primary-color;
+    margin: 4px;
+    z-index: 1;
+    i {
+      margin: 0;
+    }
+  }
+  &-unchecked {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    line-height: 14px;
+    width: 14px;
+    height: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    pointer-events: none;
+    color: @third-font-color;
+    margin: 4px;
+    z-index: 1;
+    i {
+      margin: 0;
+    }
+  }
+  input {
+    cursor: pointer;
+    opacity: 0;
+    vertical-align: middle
+  }
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>工作台_对齐</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="工作台" transform="translate(-468.000000, -46.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="工具栏" transform="translate(-1.000000, 33.000000)">
+                <g id="6" transform="translate(465.000000, 13.000000)">
+                    <g id="工作台_对齐" transform="translate(4.000000, 0.000000)">
+                        <g id="分组">
+                            <rect id="矩形" x="0" y="0.5" width="14" height="1"></rect>
+                            <rect id="矩形" x="0" y="3.5" width="7" height="1"></rect>
+                            <rect id="矩形" x="0" y="6.5" width="14" height="1"></rect>
+                            <rect id="矩形" x="0" y="9.5" width="7" height="1"></rect>
+                            <rect id="矩形" x="0" y="12.5" width="14" height="1"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

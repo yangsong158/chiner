@@ -1,0 +1,21 @@
+@import "~style";
+
+.@{prefix}-icon-title{
+  display: inline-block;
+  height: 100%;
+  padding: 2px 7px;
+  & > span {
+    margin-left: 3px;
+    font-size: 12px;
+  }
+  & > i {
+    padding: 0 !important;
+  }
+  &-normal {
+    cursor: pointer;
+  }
+  &-disable {
+    color: @primary-border-color;
+    cursor: not-allowed !important;
+  }
+}

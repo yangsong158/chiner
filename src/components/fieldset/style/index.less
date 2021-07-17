@@ -1,0 +1,56 @@
+@import "~style";
+
+.@{prefix}-fieldset {
+  & + & {
+    margin-top: 8px;
+  }
+  background: @background-color;
+  border: 1px solid @primary-border-color;
+  border-radius: 5px;
+  & > div:first-child {
+    font-size: @left-tab-font-size;
+    i {
+      margin-right: 3px;
+      font-size: @left-tab-font-size;
+    }
+    cursor: pointer;
+    width: 100%;
+    padding: 2px 5px;
+    color: @primary-color;
+    background: @third-primary-color;
+  }
+  &-disable:first-child {
+    & > div {
+      cursor: default;
+    }
+  }
+  &-icon {
+    float: right;
+    margin-right: 5px;
+    display: inline-block;
+    transition: all 0.3s;
+    i {
+      margin-right: 3px;
+    }
+    &-expand {
+      i {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  &-content {
+    padding: 5px;
+    height: calc(100% - 24px);
+    &-un-expand {
+      height: 0;
+      overflow: hidden;
+      padding: 0 !important;
+    }
+    &-expand {
+
+    }
+  }
+  &-extra {
+    float: right;
+  }
+}

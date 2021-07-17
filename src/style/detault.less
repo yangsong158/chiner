@@ -1,0 +1,149 @@
+@import "index";
+html {
+    width: 100%;
+    height: 100%;
+}
+html body {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    font-family: Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
+    font-size: 14px;
+    font-variant: tabular-nums;
+    line-height: 1.5;
+    color: @font-color;
+    background-color: @background-color;
+    & > textarea, pre {
+        font-family: Chinese Quote,-apple-system,BlinkMacSystemFont,Segoe UI,PingFang SC,Hiragino Sans GB,Microsoft YaHei,Helvetica Neue,Helvetica,Arial,sans-serif;
+    }
+}
+div {
+    outline: none;
+}
+* {
+    box-sizing: border-box;
+}
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+    background: 0 0;
+    cursor: pointer
+}
+::-webkit-scrollbar-thumb {
+    background-color: @scrollbar-color;
+    border-radius: 10px;
+    border-color: transparent;
+    border-style: solid;
+    border-width: 3px;
+    background-clip: padding-box
+}
+
+::-webkit-scrollbar-thumb:active {
+    background-color: @primary-bg
+}
+
+::-webkit-scrollbar-thumb:active,::-webkit-scrollbar-thumb:hover {
+    border-width: 1px;
+    background-color: @primary-bg;
+    cursor: pointer
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+.@{prefix}-form {
+    &-item {
+        padding: 5px;
+        display: flex;
+        flex-direction: row;
+        &-label {
+            text-align: right;
+            width: 110px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            margin: auto;
+            &-help {
+                cursor: pointer;
+                margin-left: 5px;
+                //color: @success-color;
+            }
+            &-require {
+                position: relative;
+                color: @danger-color;
+                &:before {
+                    position: relative;
+                    content: '*';
+                    top: 2px;
+                    right: 2px;
+                }
+            }
+        }
+        &-component {
+            margin-left: 10px;
+            width: calc(100% - 120px);
+            display: flex;
+            flex-direction: column;
+            input, textarea {
+                flex-grow: 1;
+            }
+            input[type=checkbox] {
+                width: 13px;
+                margin-left: 0;
+            }
+            .@{prefix}-multiple-select, .@{prefix}-multiple-select-data {
+                width: 100%;
+            }
+            &-message {
+                color: @success-color;
+            }
+            select, textarea {
+                min-height: 21px;
+                width: 100%;
+            }
+            input {
+                width: 100%;
+            }
+            input[type='radio'] {
+                width: auto;
+            }
+        }
+    }
+}
+
+pre {
+    margin: unset;
+}
+a {
+    color: @primary-color;
+    cursor: pointer;
+}
+
+.@{prefix}-list {
+    &-empty {
+        height: 100%;
+        text-align: center;
+        padding-top: 80px;
+    }
+    &-item {
+        padding: 2px;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        &-com {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    }
+}
+.@{prefix}-drag-container {
+    width: 100%;
+    cursor: move;
+    position: fixed;
+    z-index: 999;
+    opacity: 0.8;
+    pointer-events: none;
+}

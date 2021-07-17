@@ -1,0 +1,195 @@
+@import "~style";
+
+.@{prefix}-entity {
+  height: 100%;
+  /*&-title {
+    height: 21px;
+  }*/
+  &-content {
+    height: 100%;
+  }
+  &-base {
+    width: 100%;
+    height: 100%;
+    padding: 10px 5px;
+    &-form {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      & > fieldset {
+        height: 100%;
+      }
+    }
+    &-fieldset {
+      display: flex;
+      flex-direction: row;
+      & > div {
+        width: 100%;
+        padding: 0;
+        margin-bottom: 8px;
+        & > span:first-child {
+          background-color: @third-primary-color;
+          color: @primary-color;
+          margin: 0;
+          padding: 2px 5px;
+          border-radius: 5px 0 0 5px;
+        }
+        & > span:last-child {
+          margin-left: 0;
+          input {
+            border-radius: 0 5px 5px 0;
+          }
+        }
+      }
+    }
+    &-other-fieldset {
+      display: flex;
+      flex-direction: column;
+      &-group {
+        display: flex;
+        flex-direction: row;
+        & > div {
+          width: 50%;
+        }
+      }
+    }
+    &-properties {
+      border: dashed 1px @primary-border-color;
+      //max-height: 100px;
+      height: 100%;
+      &-list {
+        margin: 2px 0;
+        cursor: pointer;
+        &-container {
+          height: 100%;
+          //overflow: auto;
+        }
+        &-border {
+          background: @primary-border-color;
+          height: 1px;
+        }
+        //padding: 5px 5px;
+        display: flex;
+        flex-direction: row;
+        //justify-content: space-around;
+        align-items: center;
+        span:first-of-type {
+          user-select: none;
+          padding: 0 10px;
+          text-align: center;
+          width: 100px;
+        }
+        &-opt {
+          position: sticky;
+          top: 0;
+          background: @background-color;
+          margin-bottom: 3px;
+          border-bottom: 1px solid @primary-border-color;
+          & > span:first-child {
+            i {
+              padding: 5px;
+              color: @primary-color;
+            }
+          }
+          & > span:nth-child(2) {
+            i {
+              color: @danger-color;
+            }
+          }
+          & > span + span {
+            position: relative;
+            &:before {
+              position: absolute;
+              content: " ";
+              width: 1px;
+              height: 60%;
+              top: 20%;
+              left: 0;
+              background-color: @primary-border-color;
+            }
+          }
+        }
+        &-selected {
+          background: @third-primary-color;
+          color: @primary-color;
+        }
+        &-item {
+          span:first-of-type {
+            background: inherit;
+            color: inherit;
+            padding: 0;
+          }
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          border-left: 1px solid @primary-border-color;
+          padding-left: 10px;
+          span + span {
+            margin-left: 10px;
+          }
+        }
+      }
+    }
+  }
+  &-code {
+    height: 100%;
+    background: @background-color;
+    padding: 5px;
+  }
+  &-indexes {
+    background: @background-color;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    &-children-table {
+      background-color: @background-color;
+      & > span:first-child {
+        text-align: left;
+      }
+      margin: 5px;
+      width: auto;
+      padding: 5px;
+      table {
+        tbody {
+          & > tr:first-child {
+            td {
+              border-top: 1px solid @primary-border-color;
+            }
+          }
+          tr:nth-child(2n) {
+            td {
+             // background: @tr-background;
+            }
+          }
+        }
+      }
+    }
+    table {
+      thead {
+        th {
+          //background: @third-primary-color;
+          //color: @primary-color;
+        }
+      }
+      width: 100%;
+      //border: none;
+      td, th {
+        i {
+          display: inline-block;
+        }
+        //border: none;
+      }
+    }
+    &-left {
+      width: 80%;
+    }
+    &-right {
+      &-import {
+        height: 60vh;
+        overflow: auto;
+      }
+    }
+  }
+}

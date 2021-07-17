@@ -1,0 +1,39 @@
+@import "~style";
+
+@keyframes remote-change {
+  0%   { transform: rotate(0deg)}
+  25%  { transform: rotate(90deg)}
+  50%  { transform: rotate(180deg)}
+  75%  { transform: rotate(270deg)}
+  100% { transform: rotate(360deg)}
+}
+
+.@{prefix}-loading {
+  &-show {
+    display: flex;
+  }
+  &-hidden {
+    display: none;
+  }
+  left: 0;
+  top: 0;
+  position: fixed;
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+  background: @modal-color;
+  z-index: 1000;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  &-content {
+    color: @background-color;
+    span {
+      margin-left: 10px;
+    }
+    i {
+      animation: remote-change 1s infinite linear;
+    }
+  }
+}

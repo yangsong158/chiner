@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="14px" height="14px" viewBox="0 0 14 14" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>工作台_视图</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="工作台" transform="translate(-72.000000, -450.000000)" fill="#3C3C46" fill-rule="nonzero">
+            <g id="二级侧边" transform="translate(48.000000, 91.000000)">
+                <g id="3" transform="translate(0.000000, 350.000000)">
+                    <g id="一级菜单">
+                        <g id="工作台_视图" transform="translate(24.000000, 9.000000)">
+                            <path d="M2.625,0.875 L2.625,13.125 L0.875,13.125 L0.875,0.875 L2.625,0.875 L2.625,0.875 Z M3.5,0 L0,0 L0,14 L3.5,14 L3.5,0 L3.5,0 Z" id="形状"></path>
+                            <path d="M7.875875,0.875 L7.875875,13.125 L6.125875,13.125 L6.125875,0.875 L7.875875,0.875 L7.875875,0.875 Z M8.750875,0 L5.250875,0 L5.250875,14 L8.750875,14 L8.750875,0 L8.750875,0 Z" id="形状"></path>
+                            <path d="M13.015625,0.875 L13.015625,13.125 L11.265625,13.125 L11.265625,0.875 L13.015625,0.875 L13.015625,0.875 Z M13.890625,0 L10.390625,0 L10.390625,14 L13.890625,14 L13.890625,0 L13.890625,0 Z" id="形状"></path>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

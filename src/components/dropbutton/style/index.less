@@ -1,0 +1,20 @@
+@import "~style";
+
+.@{prefix}-dropbutton {
+  height: 100%;
+  display: inline-block;
+  //border: 1px solid @primary-border-color;
+  & > span:first-child {
+    padding:0 2px;
+    position: relative;
+    &:after {
+      content: " ";
+      position: absolute;
+      right: 0;
+      top: 10%;
+      width: 1px;
+      height: 80%;
+      background-color: @primary-border-color;
+    }
+  }
+}

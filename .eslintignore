@@ -1,0 +1,8 @@
+**/node_modules/**
+**/bower_components/**
+**/bin/**
+**/config/**
+**/public/**
+**/build/**
+**/static/**
+**/lib/**

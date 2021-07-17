@@ -1,0 +1,107 @@
+@import "~style";
+
+.modal-status(@status-color){
+  i {
+    margin-right: 10px;
+    background: @status-color;
+    padding: 2px;
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    border-radius: 15px;
+    color: @background-color;
+  }
+}
+
+.@{prefix}-modal {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 999;
+  height: 100%;
+  background-color: @modal-color;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  &-container {
+    width: @modal-width;
+  }
+  &-content {
+    //min-height: @modal-height;
+    width: 100%;
+    position: relative;
+    background-color: @background-color;
+    background-clip: padding-box;
+    border: 0;
+    border-radius: 0 0 4px 4px;
+    pointer-events: auto;
+    padding: 5px;
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
+    &-small {
+      width: @modal-min-width;
+      min-height: @modal-min-height;
+      padding: 15px 15px 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between !important;
+      &-error {
+        .modal-status(@danger-color);
+        i {
+          padding-left: 4px;
+        }
+      }
+      &-warring {
+        .modal-status(@warring-color);
+        i {
+          padding-left: 4px;
+        }
+      }
+      &-success {
+        .modal-status(@success-color)
+      }
+      &-info {
+        .modal-status(@success-color);
+        i {
+          padding-left: 7px;
+        }
+      }
+    }
+  }
+  &-header {
+    -webkit-app-region: no-drag;
+    width: 100%;
+    padding: 5px;
+    position: relative;
+    border-bottom: 1px @primary-border-color solid;
+    border-radius: 4px 4px 0 0;
+    pointer-events: auto;
+    display: flex;
+    flex-direction: row;
+    background-color: @background-color;
+    &-small {
+      width: @modal-min-width;
+    }
+    &-title {
+      margin-left: 10px;
+      font-weight: bold;
+    }
+    &-icon {
+      position: absolute;
+      right: 10px;
+      top: 7px;
+      &:hover {
+        cursor: pointer;
+        color: @danger-color;
+      }
+    }
+  }
+  &-footer {
+    text-align: center;
+  }
+}

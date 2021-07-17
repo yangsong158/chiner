@@ -1,0 +1,119 @@
+@import "~style";
+
+.@{prefix}-simple-tab {
+  height: 100%;
+  &-left {
+    display: flex;
+    flex-direction: row;
+  }
+  &-top {
+    display: flex;
+    flex-direction: column;
+  }
+  &-block {
+
+  }
+  &-titles {
+    background: @home-background;
+    &-left {
+      padding: 5px;
+      height: 100%;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      background: @background-color;
+      .@{prefix}-simple-tab-titles-title-active {
+        color: @primary-color;
+        &:before {
+          content: " ";
+          position: absolute;
+          width: 4px;
+          height: 50%;
+          left: 0;
+          top: calc(25% + 1px);
+          background: @primary-color;
+        }
+      }
+      & > span {
+        white-space: nowrap;
+        margin-top: 2px;
+        padding: 2px 2px 0 8px;
+        cursor: pointer;
+        position: relative;
+      }
+    }
+    &-top {
+      .@{prefix}-simple-tab-titles-title-active {
+        display: inline-block;
+        cursor: pointer;
+        margin-top: 5px;
+        padding: 5px 10px;
+        border-right: 1px solid @primary-border-color;
+        background: @background-color;
+        border-radius: 8px 8px 0 0;
+        color: @primary-color;
+        box-shadow: 2px -2px 3px @primary-color
+      }
+      .@{prefix}-simple-tab-titles-title-default {
+        margin-top: 5px;
+        padding: 5px 10px;
+        display: inline-block;
+        cursor: pointer;
+        color: @font-color;
+      }
+    }
+    &-block {
+      border: 1px solid @primary-border-color;
+      border-radius: 2px;
+      padding: 2px;
+      background: @background-color;
+      & > span + span {
+        position: relative;
+        &:before {
+          content: " ";
+          position: absolute;
+          width: 1px;
+          height: 90%;
+          left: -6px;
+          top: 5%;
+          background: @primary-border-color;
+        }
+      }
+      .@{prefix}-simple-tab-titles-title-active {
+        display: inline-block;
+        cursor: pointer;
+        padding: 5px 10px;
+        margin: 0 5px;
+        border-radius: 5px;
+        background: @primary-color;
+        color: @background-color;
+      }
+      .@{prefix}-simple-tab-titles-title-default {
+        padding: 5px 10px;
+        margin: 0 5px;
+        display: inline-block;
+        cursor: pointer;
+        color: @font-color;
+      }
+    }
+  }
+  &-contents {
+    &-left {
+      height: 100%;
+      overflow: auto;
+    }
+    &-block {
+      height: calc(100% - 37px);
+    }
+    flex-grow: 1;
+    overflow: auto;
+    background: @background-color;
+    &-content-active {
+      display: block;
+      height: 100%;
+    }
+    &-content-default {
+      display: none;
+    }
+  }
+}

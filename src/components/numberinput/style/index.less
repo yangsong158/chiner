@@ -1,0 +1,23 @@
+@import "~style";
+
+.@{prefix}-numberinput {
+  border: 1px solid @primary-border-color;
+  border-radius: 2px;
+  outline: none;
+  line-height: 25px;
+  height: 25px;
+  padding: 5px 5px;
+  &:read-only {
+    &:hover, &:focus {
+      border: none;
+      box-shadow: none;
+    }
+  }
+  &:hover {
+    border: 1px solid @primary-color;
+  }
+  &:focus {
+    border: 1px solid @primary-color;
+    box-shadow: 0 0 0 2px @third-primary-color;
+  }
+}

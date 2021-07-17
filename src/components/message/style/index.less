@@ -1,0 +1,54 @@
+@import "~style";
+
+.@{prefix}-message-container {
+  position: fixed;
+  background: transparent;
+  pointer-events: none;
+  top: @toolbar-height;
+  display: flex;
+  flex-direction: column-reverse;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  width: 100%;
+}
+.@{prefix}-message-context {
+  margin-top: 5px;
+}
+.message-status(@status-color){
+  background: @status-color;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 2px;
+  width: 18px;
+  height: 18px;
+  border-radius: 15px;
+  color: @background-color;
+}
+.@{prefix}-message{
+  background: @background-color;
+  box-shadow: 0 0 6px 2px @primary-border-color;
+  border-radius: 5px;
+  border: 1px solid @primary-border-color;
+  pointer-events: auto;
+  user-select: none;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  span + span {
+    margin-left: 6px;
+  }
+  &-success {
+    .message-status(@success-color)
+  }
+  &-error {
+    .message-status(@danger-color)
+  }
+  &-warring {
+    .message-status(@warring-color)
+  }
+}

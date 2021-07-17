@@ -1,0 +1,80 @@
+@import "~style";
+
+.opt(){
+  &-opt {
+    height: 23px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    i {
+      padding: 5px;
+    }
+    .@{prefix}-button {
+      height: 23px;
+      line-height: 23px;
+      padding: 0;
+    }
+    span:hover {
+      border-bottom: none !important;
+      border-right: none !important;
+      border-top: none !important;
+    }
+    span {
+      border-bottom: none !important;
+      border-right: none !important;
+      border-top: none!important;
+    }
+  }
+}
+
+.@{prefix}-setting-entity-init-fields {
+  padding: 5px;
+  overflow: auto;
+  height: 60vh;
+}
+
+.@{prefix}-setting-java-home {
+ // padding: 5px;
+ // height: 60vh;
+  .opt();
+}
+.@{prefix}-setting-sql-delimiter {
+//  padding: 5px;
+//  height: 60vh;
+}
+.@{prefix}-setting-doc-template {
+ // padding: 5px;
+ // height: 60vh;
+  .opt();
+  &-preview {
+    height: 400px;
+    margin-bottom: 5px;
+  }
+}
+.@{prefix}-setting-language {
+ // height: 60vh;
+}
+.@{prefix}-setting-model {
+ // height: 60vh;
+  &-message {
+    white-space: nowrap;
+    color: @second-primary-color;
+    text-overflow: ellipsis;
+    margin-left: 5px;
+  }
+}
+.@{prefix}-setting-system-parameter {
+  padding: 5px;
+  height: 60vh;
+  overflow: auto;
+  .@{prefix}-form-item-label {
+    width: 150px;
+  }
+}
+
+.@{prefix}-setting-system-dbconnect {
+  padding: 5px;
+  height: 60vh;
+  overflow: auto;
+}

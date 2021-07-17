@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="16px" height="16px" viewBox="0 0 16 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 53.2 (72643) - https://sketchapp.com -->
+    <title>工作台_操作</title>
+    <desc>Created with Sketch.</desc>
+    <g id="页面-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="工作台" transform="translate(-353.000000, -45.000000)" fill="#FFFFFF" fill-rule="nonzero">
+            <g id="工具栏" transform="translate(-1.000000, 33.000000)">
+                <g id="4" transform="translate(351.000000, 12.000000)">
+                    <g id="工作台_操作" transform="translate(2.000000, 0.000000)">
+                        <g id="分组">
+                            <path d="M13.968,0 L2.268,0 C1.568,0 0.998,0.57 0.998,1.27 L0.998,14.047 L1.998,14.047 L1.998,1.27 C1.999,1.121 2.12,1 2.268,1 L13.967,1 L13.967,0 L13.968,0 Z" id="路径"></path>
+                            <path d="M16.001,2 L4,2 C3.448,2 3,2.448 3,3 L3,15 C3,15.552 3.448,16 4,16 L16.001,16 C16.553,16 17.001,15.552 17.001,15 L17.001,3 C17.001,2.448 16.554,2 16.001,2 Z M16.001,15 L4,15 L4,3 L16.001,3 L16.001,15 Z" id="形状"></path>
+                            <rect id="矩形" x="6.001" y="5.5" width="8" height="1"></rect>
+                            <rect id="矩形" x="6.001" y="8.5" width="3.926" height="1"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,132 @@
+@import "~style";
+
+.@{prefix}-listselect {
+  height: 100%;
+  width: 100%;
+  &-container {
+    margin-top: 5px;
+    height: calc(100% - 29px);
+    display: flex;
+    flex-direction: row;
+  }
+  &-opt {
+    i {
+      font-size: 12px;
+    }
+    border: 1px solid #DFE3EB;
+    border-radius: 2px;
+    display: inline-block;
+    height: 28px;
+    width: 100%;
+    & > span {
+      position: relative;
+    }
+    & > span:last-child {
+      padding: 2px 8px;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+    & > span + span {
+      &:before {
+        position: absolute;
+        content: " ";
+        width: 1px;
+        height: 60%;
+        top: 20%;
+        left: 0;
+        background-color: #DFE3EB;
+      }
+    }
+  }
+  &-left {
+    width: 35%;
+    height: 100%;
+    overflow: auto;
+    &-item {
+      & > td:nth-child(1) {
+        text-align: center;
+      }
+      & > td {
+        white-space: nowrap;
+        padding: 5px;
+      }
+      width: 100%;
+      white-space: nowrap;
+      &-repeat {
+        color: @warring-color;
+      }
+      &:nth-child(2n) {
+        background: @tr-background;
+      }
+    }
+    &-container {
+      margin-top: 5px;
+      height: calc(100% - 34px);
+      overflow: auto;
+      border: 1px solid #DFE3EB;
+      & > table {
+        width: 100%;
+        //height: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+    }
+  }
+  &-right {
+    width: calc(65% - 5px);
+    height: 100%;
+    overflow: auto;
+    margin-left: 5px;
+    &-item {
+      & > td {
+        white-space: nowrap;
+        padding: 5px;
+      }
+      .@{prefix}-multiple-select {
+        width: 200px;
+        height: 25px;
+        & > div {
+          width: 100%;
+        }
+      }
+      & > td:nth-child(1) {
+        text-align: center;
+      }
+      &:nth-child(2n) {
+        background: @tr-background;
+      }
+      & > td:nth-child(2) {
+        text-align: center;
+        user-select: none;
+        cursor: pointer;
+        color: @second-primary-color;
+      }
+      &-disable {
+        color: @warring-color;
+        cursor: pointer;
+        margin-right: 5px;
+      }
+    }
+    &-container {
+      & > table {
+        width: 100%;
+        //height: 100%;
+        border-collapse: separate;
+        border-spacing: 0;
+      }
+      height: 100%;
+      overflow: auto;
+      border: 1px solid #DFE3EB;
+    }
+    &-empty {
+      width: 100%;
+      height: 100%;
+      text-align: center;
+      display: flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+}

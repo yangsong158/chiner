@@ -1,0 +1,45 @@
+@import "~style";
+
+.@{prefix}-progressbar {
+  position: relative;
+  margin: 0 5px;
+  width: calc(100% - 10px);
+  height: 18px;
+  background: @primary-border-color;
+  border: 4px solid @primary-border-color-simple;
+  border-radius: 19px;
+  &-title {
+    position: absolute;
+    right: 0;
+    bottom: 20px;
+    color: @primary-color;
+    width: 100%;
+    & > span:first-child {
+
+    }
+    & > span:last-child {
+      float: right;
+    }
+  }
+  &-content {
+    transition: width 0.3s;
+    background-image: linear-gradient(to right, @second-primary-color, @primary-color);
+    width: 0;
+    height: 10px;
+    border-radius: 19px;
+    position: relative;
+    &:after {
+      width: 20px;
+      height: 20px;
+      position: absolute;
+      right: -7px;
+      top: -8px;
+      content: "";
+      background-size: contain;
+      background-repeat: no-repeat;
+      border-radius: 50%;
+      border: 2px solid @primary-color;
+      background-image: url("icon.png");
+    }
+  }
+}

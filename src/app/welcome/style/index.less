@@ -1,0 +1,147 @@
+@import "~style";
+
+@keyframes bottom {
+  33% {
+   margin-bottom: 0;
+  }
+  66% {
+   margin-bottom: 5px;
+  }
+  100% {
+    margin-bottom: 0;
+  }
+}
+
+@keyframes top {
+  33% {
+    margin-bottom: 5px;
+  }
+  66% {
+    margin-bottom: 0;
+  }
+  100% {
+    margin-bottom: 5px;
+  }
+}
+
+.@{prefix}-welcome {
+  pointer-events: none;
+  -webkit-app-region: drag;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: @background-color;
+  &-header {
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #FFFFFF;
+    z-index: 2;
+    border-bottom: 1px solid @primary-border-color;
+    height: 80px;;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    &-logo {
+      margin-left: 21px;
+      background-size: contain;
+      background-repeat: no-repeat;
+      height: 40px;
+      width: 40px;
+      background-image: url("icon.png");
+    }
+    &-name {
+      margin-left: 5px;
+      text-align: center;
+      font-weight: bold;
+    }
+  }
+  &-body {
+    padding-top: 80px;
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+    &-left {
+      padding: 20px;
+      width: 50%;
+      height: 100%;
+      &-bg {
+        background-size: contain;
+        background-repeat: no-repeat;
+        height: 100%;
+        width: 100%;
+        background-image: url("bg.png");
+      }
+    }
+    &-right {
+      width: 50%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      &-circle {
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 1200px;
+        height: 1200px;
+        border-radius: 50%;
+        box-shadow: -4px 0 16px 0 rgba(65, 93, 104, 0.06);
+        transform: translateX(50%) translateY(-32%);
+        z-index: 1;
+      }
+      &-icon {
+        height: 40%;
+        margin-top: 100px;
+        background-size: contain;
+        background-repeat: no-repeat;
+        width: 137px;
+        background-image: url("icon.png");
+      }
+      &-loading {
+        height: 10%;
+        text-align: center;
+        & > span:first-child {
+          margin-right: 10px;
+        }
+        &-block {
+          display: inline-block;
+          background: @font-color;
+          width: 4px;
+          height: 4px;
+          & + & {
+            margin-left: 5px;
+          }
+        }
+        & > span:nth-child(2) {
+          animation: bottom 1s infinite linear;
+        }
+        & > span:nth-child(3) {
+          margin-bottom: 5px;
+          animation: top 1s infinite linear;
+        }
+        & > span:nth-child(4) {
+          animation: bottom 1s infinite linear;
+        }
+      }
+      &-progress {
+        height: 20%;
+      }
+      &-copy {
+        height: 30%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-end;
+        padding-bottom: 20px;
+      }
+    }
+  }
+  &-progressbar {
+    position: absolute;
+    right: 12px;
+    bottom: 165px;
+    width: 520px;
+  }
+}

@@ -1,0 +1,40 @@
+@import "~style";
+
+.@{prefix}-radio {
+  cursor: pointer;
+  position: relative;
+  display: inline-block;
+  &-checked {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    line-height: 14px;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    pointer-events: none;
+    color: @primary-color;
+    margin: 4px;
+    z-index: 1;
+  }
+  &-unchecked {
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-size: 14px;
+    line-height: 14px;
+    width: 14px;
+    height: 14px;
+    display: inline-block;
+    pointer-events: none;
+    color: @third-font-color;
+    margin: 4px;
+    z-index: 1;
+  }
+  input {
+    cursor: pointer;
+    opacity: 0;
+    vertical-align: middle
+  }
+}

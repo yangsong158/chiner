@@ -1,0 +1,79 @@
+{
+  "extends": "airbnb",
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "indent": ["off"],//关闭缩进检查
+    "react/jsx-indent": ["warn", 2],
+    "react/jsx-indent-props": ["warn", 2],
+    "padded-blocks":["off"],
+    "no-unused-vars":["warn"],
+    "react/jsx-tag-spacing":["off"],
+    "jsx-quotes":["off"],
+    "react/jsx-closing-tag-location":["off"],
+    "react/jsx-closing-bracket-location":["off"],
+    "object-shorthand": ["off"],
+    "no-useless-escape":["off"],  //不允许在字符串和正则表达式中使用无意义的换行符
+    "no-cond-assign":["off"],
+    "keyword-spacing":["off"],//if等关键字后面一定要跟空格
+    "object-curly-spacing":["off"],//{  }内容开始结束必需要有空格
+    "one-var-declaration-per-line":["off"],//一行只能写一个变量
+    "spaced-comment":["off"],
+    "no-multi-spaces":["off"],
+    "prefer-destructuring":["off"],
+    "semi-spacing":["off"],//分号前必需要有空格（你怎么管得这么细呢，这么多规则，谁记得住）
+    "space-before-blocks": ["off"],
+    "comma-spacing":["off"],
+    "key-spacing":["off"],
+    "prefer-const":["off"],
+    "one-var":["off"],//一行只能有一个变量声明，关闭掉
+    "arrow-body-style": ["off"], // 箭头函数中，如果函数体里只有一句代码时允许不省略大括号
+    "import/prefer-default-export": ["off"], // 允许一个js文件中导出多个
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }], // 允许使用js文件来写react
+    "react/prefer-stateless-function": ["off"], // 允许无状态组件不写成函数组件
+    "linebreak-style": ["off"], // 关闭回车换行格式的检查
+    "react/prop-types": ["off"], // 允许不申明props的类型以及校验而直接使用
+    "jsx-a11y/anchor-is-valid": ["off"], // 允许使用锚点路由
+    "object-curly-newline": ["off"], // 解构对象时允许不换行
+    "no-underscore-dangle": ["off"], //允许标识符中有悬空下划线
+    "react/no-multi-comp": ["off"], // 允许一个js文件中同时存在多个组件
+    "react/no-string-refs": ["off"], // 允许使用ref通过字符串的形式
+    "import/extensions": [1, { "extensions": [".json"] }], // 允许导入json格式的文件
+    "jsx-a11y/click-events-have-key-events": ["off"], // 允许定义点击事件的时候不加上onKeyDown、onKeyUp等来区分
+    "jsx-a11y/no-static-element-interactions": ["off"], // 允许非常用的节点不使用role="button"增加点击事件
+    "jsx-a11y/no-noninteractive-element-interactions": ["off"], // 允许非交互性组件增加事件
+    "function-paren-newline": ["off"], // 允许方法的参数换行,
+    "no-return-assign": ["off"], //允许箭头函数的返回值是一个赋值语句
+    "no-mixed-operators":0, // 关闭禁止混合使用不同的操作符
+    "no-console": 0, // 关闭禁止使用控制台
+    "no-unused-expressions": 0, // 关闭禁止无返回值表达式
+    "react/no-array-index-key": 0,
+    "react/destructuring-assignment": 0, // 关闭必须使用解构赋值
+    "import/no-useless-path-segments": 0, // 关闭多余的路径导入警告
+    "lines-between-class-members": 0, // 关闭类之间必须空行
+    "operator-linebreak": 0, // 关闭操作符不允许空行
+    "react/jsx-wrap-multilines": 0, // 关闭多行标签不使用括号包裹
+    "no-multiple-empty-lines": 0, // 关闭多余空行报错
+    "no-else-return": 0, // 关闭else没有返回值的警告
+    "implicit-arrow-linebreak": 0, // 关闭表达式不允许换行
+    "react/no-access-state-in-setstate": 0, // 关闭不允许在callback中使用上一个state,
+    "no-undef": 0, // 关闭未直接使用的报错
+    "react/jsx-one-expression-per-line": 0, // 关闭字符串在jsx中换行的警告
+    "react/forbid-prop-types": 0, // 关闭对prop-types的禁用
+    "import/no-cycle": 0, // 允许循环依赖
+    "import/no-unresolved": 0,
+    "react/button-has-type": 0,
+    "jsx-a11y/no-noninteractive-tabindex": 0,
+    "jsx-a11y/mouse-events-have-key-events": 0,
+    "jsx-a11y/tabindex-no-positive": 0
+  },
+  "parserOptions": {
+    "ecmaFeatures": {
+      "legacyDecorators": true // 允许修饰符在类的上方
+    }
+  }
+}

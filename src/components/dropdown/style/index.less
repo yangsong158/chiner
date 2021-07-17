@@ -1,0 +1,27 @@
+@import "~style";
+
+.@{prefix}-dropdown {
+  &-container {
+    position: absolute;
+    z-index: 999;
+    background: @background-color;
+    outline: none;
+    padding: 3px 0;
+    color: @font-color;
+    border: 1px solid @primary-border-color;
+  }
+  &-item {
+    &-disable {
+      color: @third-font-color;
+      &:hover {
+        cursor: not-allowed !important;
+      }
+    }
+    padding: 5px 10px;
+    &:hover {
+      cursor: pointer;
+      color: @primary-color;
+      background-color: @third-primary-color;
+    }
+  }
+}

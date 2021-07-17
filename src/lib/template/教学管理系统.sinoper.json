@@ -1,0 +1,5341 @@
+{
+  "name": "教学管理系统",
+  "describe": "教学管理系统参考案例",
+  "avatar": "",
+  "version": "3.0.0",
+  "createdTime": "2021-5-29 22:04:15",
+  "updatedTime": "2021-7-10 09:45:24",
+  "dbConns": [],
+  "profile": {
+    "default": {
+      "db": "MYSQL",
+      "dbConn": "",
+      "entityInitFields": [
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "REVISION",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "CREATED_BY",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "CREATED_TIME",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": 0,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "UPDATED_BY",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "UPDATED_TIME",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": 0,
+          "scale": 0,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ]
+    },
+    "javaHome": "",
+    "sql": {
+      "delimiter": ""
+    },
+    "dataTypeSupports": [
+      "MYSQL",
+      "ORACLE",
+      "SQLServer",
+      "PostgreSQL",
+      "JAVA"
+    ],
+    "codeTemplates": [
+      {
+        "type": "dbDDL",
+        "applyFor": "MYSQL",
+        "createTable": "CREATE TABLE {{=it.entity.defKey}}(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.primaryKey }}{{ pkList.push(field.defKey) }}{{?}}\n    {{=field.defKey}} {{=field.type}}{{?field.len>0}}{{='('}}{{=field.len}}{{?field.scale>0}}{{=','}}{{=field.scale}}{{?}}{{=')'}}{{?}} {{= field.notNull ? 'NOT NULL' : '' }} {{= field.autoIncrement ? 'AUTO_INCREMENT' : '' }} {{= field.defaultValue ? it.func.join(' DEFAULT ',field.defaultValue,' ') : '' }} COMMENT '{{=it.func.join(field.defName,field.comment,';')}}' {{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n)  COMMENT = '{{=it.func.join(it.entity.defName,it.entity.comment,';') }}'{{=it.separator}}\n$blankline",
+        "createIndex": "{{~ it.entity.indexes:index}}\nCREATE {{? index.unique}}UNIQUE {{?}}INDEX {{=index.defKey}} ON TABLE {{=it.entity.defKey}}({{ fieldsKeys = index.fields.map(function(field){return field.fieldDefKey}) ; }}{{=it.func.join(...fieldsKeys,',')}});\n{{~}}"
+      },
+      {
+        "applyFor": "ORACLE",
+        "referURL": "",
+        "type": "dbDDL",
+        "createTable": "CREATE TABLE {{=it.entity.defKey}}(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.primaryKey }}{{ pkList.push(field.defKey) }}{{?}}\n    {{=field.defKey}} {{=field.type}}{{?field.len>0}}{{='('}}{{=field.len}}{{?field.scale>0}}{{=','}}{{=field.scale}}{{?}}{{=')'}}{{?}}{{= field.notNull ? ' NOT NULL' : '' }}{{= field.autoIncrement ? ' AUTO_INCREMENT' : '' }}{{= field.defaultValue ? it.func.join(' DEFAULT ',field.defaultValue,' ') : '' }}{{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n){{=it.separator}}\n$blankline\n{{? it.entity.defKey || it.entity.defName}}COMMENT ON TABLE {{=it.entity.defName}} IS '{{=it.func.join(it.entity.defName,it.entity.comment,';')}}';{{?}}\n{{~it.entity.fields:field:index}}\n{{? field.defName || field.comment}}COMMENT ON COLUMN {{=it.entity.defKey}}.{{=field.defKey}} IS '{{=it.func.join(field.defName,field.comment,';')}}';{{?}}\n{{~}}",
+        "createIndex": "{{~ it.entity.indexes:index}}\nCREATE {{? index.unique}}UNIQUE {{?}}INDEX {{=index.defKey}} ON TABLE {{=it.entity.defKey}}({{ fieldsKeys = index.fields.map(function(field){return field.fieldDefKey}) ; }}{{=it.func.join(...fieldsKeys,',')}});\n{{~}}"
+      },
+      {
+        "applyFor": "SQLServer",
+        "referURL": "",
+        "type": "dbDDL",
+        "createTable": "CREATE TABLE {{=it.entity.defKey}}(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.primaryKey }}{{ pkList.push(field.defKey) }}{{?}}\n    {{=field.defKey}} {{=field.type}}{{?field.len>0}}{{='('}}{{=field.len}}{{?field.scale>0}}{{=','}}{{=field.scale}}{{?}}{{=')'}}{{?}}{{= field.notNull ? ' NOT NULL' : '' }}{{= field.autoIncrement ? ' AUTO_INCREMENT' : '' }}{{= field.defaultValue ? it.func.join(' DEFAULT ',field.defaultValue,' ') : '' }}{{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n){{=it.separator}}\n$blankline\n{{? it.entity.defKey || it.entity.defName}}EXEC sp_addextendedproperty 'MS_Description', '{{=it.func.join(it.entity.defName,it.entity.comment,';')}}', 'SCHEMA', dbo, 'table', {{=it.entity.defKey}}, null, null;{{?}}\n{{~it.entity.fields:field:index}}\nEXEC sp_addextendedproperty 'MS_Description', '{{=it.func.join(field.defName,field.comment,';')}}', 'SCHEMA', dbo, 'table', {{=it.entity.defKey}}, 'column', {{=field.defKey}};\n{{~}}",
+        "createIndex": "{{~ it.entity.indexes:index}}\nCREATE {{? index.unique}}UNIQUE {{?}}INDEX {{=index.defKey}} ON TABLE {{=it.entity.defKey}}({{ fieldsKeys = index.fields.map(function(field){return field.fieldDefKey}) ; }}{{=it.func.join(...fieldsKeys,',')}});\n{{~}}"
+      },
+      {
+        "applyFor": "PostgreSQL",
+        "referURL": "",
+        "type": "dbDDL",
+        "createTable": "CREATE TABLE {{=it.entity.defKey}}(\n{{ pkList = [] ; }}\n{{~it.entity.fields:field:index}}\n    {{? field.primaryKey }}{{ pkList.push(field.defKey) }}{{?}}\n    {{=field.defKey}} {{=field.type}}{{?field.len>0}}{{='('}}{{=field.len}}{{?field.scale>0}}{{=','}}{{=field.scale}}{{?}}{{=')'}}{{?}}{{= field.notNull ? ' NOT NULL' : '' }}{{= field.autoIncrement ? ' AUTO_INCREMENT' : '' }}{{= field.defaultValue ? it.func.join(' DEFAULT ',field.defaultValue,' ') : '' }}{{= index < it.entity.fields.length-1 ? ',' : ( pkList.length>0 ? ',' :'' ) }}\n{{~}}\n{{? pkList.length >0 }}\n    PRIMARY KEY ({{~pkList:pkName:i}}{{= pkName }}{{= i<pkList.length-1 ? ',' : '' }}{{~}})\n{{?}}\n){{=it.separator}}\n$blankline\n{{? it.entity.defKey || it.entity.defName}}COMMENT ON TABLE {{=it.entity.defName}} IS '{{=it.func.join(it.entity.defName,it.entity.comment,';')}}';{{?}}\n{{~it.entity.fields:field:index}}\n{{? field.defName || field.comment}}COMMENT ON COLUMN {{=it.entity.defKey}}.{{=field.defKey}} IS '{{=it.func.join(field.defName,field.comment,';')}}';{{?}}\n{{~}}",
+        "createIndex": "{{~ it.entity.indexes:index}}\nCREATE {{? index.unique}}UNIQUE {{?}}INDEX {{=index.defKey}} ON TABLE {{=it.entity.defKey}}({{ fieldsKeys = index.fields.map(function(field){return field.fieldDefKey}) ; }}{{=it.func.join(...fieldsKeys,',')}});\n{{~}}"
+      },
+      {
+        "type": "appCode",
+        "applyFor": "JAVA",
+        "content": "package pro.siner.entity;\n$blankline\nimport javax.persistence.*;\nimport java.io.Serializable;\nimport java.util.Date;\n$blankline\n{{\n    var today=new Date();\n    var fullYear=today.getFullYear();\n    var month=today.getMonth() + 1;\n    var days=today.getDate();\n}}\n /**\n * @author : http://www.siner.pro\n * @date : {{=fullYear}}-{{=month}}-{{=days}}\n * @desc : {{=it.func.join(it.entity.defName,it.entity.comment,'-')}}\n */\n@Table(name=\"{{=it.entity.defKey}}\")\npublic class {{=it.func.camel(it.entity.defKey,true) }} implements Serializable,Cloneable{\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.defName,field.comment,';')}} */\n    {{? field.primaryKey }}\n    @Id\n    @GeneratedValue\n    {{?}}\n    private {{=field.type}} {{=it.func.camel(field.defKey,false)}} ;\n{{~}}\n$blankline\n\n{{~it.entity.fields:field:index}}\n    /** {{=it.func.join(field.defName,field.comment,';')}} */\n    public {{=field.type}} get{{=it.func.camel(field.defKey,true)}}(){\n        return this.{{=it.func.camel(field.defKey,false)}};\n    }\n    /** {{=it.func.join(field.defName,field.comment,';')}} */\n    public void set{{=it.func.camel(field.defKey,true)}}({{=field.type}} {{= it.func.camel(field.defKey,false) }}){\n        return this.{{=it.func.camel(field.defKey,false)}};\n    }\n{{~}}\n}"
+      }
+    ],
+    "generatorDoc": {
+      "docTemplate": ""
+    },
+    "relationFieldSize": "15"
+  },
+  "entities": [
+    {
+      "defKey": "SIMS_COLLEGE",
+      "defName": "学院",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true,
+          "freeze": false
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false,
+          "freeze": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": true,
+          "freeze": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false,
+          "freeze": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "COLLEGE_ID",
+          "defName": "学院ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "COLLEGE_NAME",
+          "defName": "学院名称",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "SHORT_NAME",
+          "defName": "学院简称",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "INTRO",
+          "defName": "学院介绍",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "900",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DescText"
+        },
+        {
+          "defKey": "PROFESSION_NUMBER",
+          "defName": "专业个数",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "STUDENT_NUMBER",
+          "defName": "学生人数",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "PRESIDENT",
+          "defName": "院长",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": []
+    },
+    {
+      "defKey": "SIMS_MAJOR",
+      "defName": "专业",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "defKey",
+          "hideInGraph": false,
+          "code": "name",
+          "value": "字段代码",
+          "newCode": "defKey",
+          "com": "Input",
+          "relationNoShow": false,
+          "freeze": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false,
+          "code": "chnname",
+          "value": "显示名称",
+          "newCode": "defName",
+          "com": "Input",
+          "relationNoShow": false,
+          "freeze": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false,
+          "code": "pk",
+          "value": "主键",
+          "newCode": "primaryKey",
+          "com": "Checkbox",
+          "relationNoShow": false,
+          "freeze": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true,
+          "code": "notNull",
+          "value": "不为空",
+          "newCode": "notNull",
+          "com": "Checkbox",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true,
+          "code": "autoIncrement",
+          "value": "自增",
+          "newCode": "autoIncrement",
+          "com": "Checkbox",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": true,
+          "code": "type",
+          "value": "数据域",
+          "newCode": "domain",
+          "com": "Select",
+          "relationNoShow": false,
+          "freeze": false
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": false,
+          "code": "dataType",
+          "value": "数据类型",
+          "newCode": "type",
+          "com": "Text",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": false,
+          "code": "len",
+          "value": "长度",
+          "newCode": "len",
+          "com": "Input",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true,
+          "code": "scale",
+          "value": "小数位数",
+          "newCode": "scale",
+          "com": "Input",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true,
+          "code": "remark",
+          "value": "说明",
+          "newCode": "remark",
+          "com": "Input",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true,
+          "code": "refDict",
+          "value": "数据字典",
+          "newCode": "refDict",
+          "com": "SearchSelect",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true,
+          "code": "defaultValue",
+          "value": "默认值",
+          "newCode": "defaultValue",
+          "com": "Input",
+          "relationNoShow": true,
+          "freeze": false
+        },
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true,
+          "freeze": false
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false,
+          "freeze": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "MAJOR_ID",
+          "defName": "专业ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "MAJOR_NAME",
+          "defName": "专业名称",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "SHORT_NAME",
+          "defName": "专业简称",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "ESTAB_DATE",
+          "defName": "开设日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "INTRO",
+          "defName": "专业介绍",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "900",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DescText"
+        },
+        {
+          "defKey": "TUITION_FEE",
+          "defName": "学费",
+          "comment": "",
+          "type": "NUMBER",
+          "len": 32,
+          "scale": 8,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Money"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": []
+    },
+    {
+      "defKey": "SIMS_CLASS",
+      "defName": "班级",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "COLLEGE_ID",
+          "defName": "所在学院",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "MAJOR_ID",
+          "defName": "所属专业ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "CLASS_ID",
+          "defName": "班级ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "CLASS_NAME",
+          "defName": "班级名称",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "STUDENT_NUMBER",
+          "defName": "班级人数",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "ADVISER",
+          "defName": "辅导员",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "ESTAB_DATE",
+          "defName": "成立时间",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "YEAR_NUMBER",
+          "defName": "学习年数",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": [
+        {
+          "myField": "COLLEGE_ID",
+          "refEntity": "SIMS_COLLEGE",
+          "refField": "COLLEGE_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        },
+        {
+          "myField": "MAJOR_ID",
+          "refEntity": "SIMS_MAJOR",
+          "refField": "MAJOR_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        }
+      ]
+    },
+    {
+      "defKey": "SIMS_STUDENT",
+      "defName": "学生",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true,
+          "freeze": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false,
+          "freeze": true
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false,
+          "freeze": true
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true,
+          "freeze": false
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true,
+          "freeze": false
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false,
+          "freeze": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "COLLEGE_ID",
+          "defName": "所在学院ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "CLASS_ID",
+          "defName": "所在班级ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "STUDENT_ID",
+          "defName": "学生ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "STUDENT_NAME",
+          "defName": "学生姓名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "ENG_NAME",
+          "defName": "英文名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "ID_CARD_NO",
+          "defName": "身份证号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "MOBILE_PHONE",
+          "defName": "手机号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "GENDER",
+          "defName": "性别",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "'M'",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Gender"
+        },
+        {
+          "defKey": "MONTHLY_SALARY",
+          "defName": "月薪",
+          "comment": "",
+          "type": "NUMBER",
+          "len": 32,
+          "scale": 8,
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Money"
+        },
+        {
+          "defKey": "BIRTH",
+          "defName": "出生日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "AVATAR",
+          "defName": "头像",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "HEIGHT",
+          "defName": "身高",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "WEIGHT",
+          "defName": "体重",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "NATION",
+          "defName": "名族",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "'01'",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "GBNation"
+        },
+        {
+          "defKey": "POLITICAL",
+          "defName": "政治面貌",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Political"
+        },
+        {
+          "defKey": "MARITAL",
+          "defName": "婚姻状况",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "'UNMARRIED'",
+          "hideInGraph": true,
+          "domain": "Dict",
+          "refDict": "Marital"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_PROVINCE",
+          "defName": "籍贯（省）",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_CITY",
+          "defName": "籍贯（市）",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_ADDRESS",
+          "defName": "户籍地址",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "HOBBY",
+          "defName": "爱好",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "INTRO",
+          "defName": "简要介绍",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "900",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DescText"
+        },
+        {
+          "defKey": "PRESENT_ADDRESS",
+          "defName": "居住地址",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "EMAIL",
+          "defName": "电子邮件",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "ENTRY_DATE",
+          "defName": "入学日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "STATUS",
+          "defName": "状态",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "'Normal'",
+          "hideInGraph": true,
+          "domain": "Dict",
+          "refDict": "StudentStatus"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": [
+        {
+          "myField": "CLASS_ID",
+          "refEntity": "SIMS_CLASS",
+          "refField": "CLASS_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        }
+      ],
+      "indexes": [
+        {
+          "defKey": "idx_smis_student_id",
+          "defName": null,
+          "unique": true,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "STUDENT_ID",
+              "ascOrDesc": "A"
+            }
+          ]
+        },
+        {
+          "defKey": "idx_smis_student_01",
+          "defName": null,
+          "unique": false,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "STUDENT_NAME",
+              "ascOrDesc": "A"
+            },
+            {
+              "fieldDefKey": "ENG_NAME",
+              "ascOrDesc": "A"
+            }
+          ]
+        },
+        {
+          "defKey": "idx_smis_student_cert",
+          "defName": null,
+          "unique": false,
+          "comment": "",
+          "fields": [
+            {
+              "fieldDefKey": "ID_CARD_NO",
+              "ascOrDesc": "A"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "defKey": "SIMS_TEACHER",
+      "defName": "教师",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true,
+          "freeze": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false,
+          "freeze": true
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false,
+          "freeze": true
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "COLLEGE_ID",
+          "defName": "所在学院ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "TEACHER_ID",
+          "defName": "教师ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "TEACHER_NAME",
+          "defName": "姓名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "GENDER",
+          "defName": "性别",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "‘M’",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Gender"
+        },
+        {
+          "defKey": "BIRTH",
+          "defName": "出生日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "GRADUATE_INSTITUTION",
+          "defName": "毕业院校",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "PRACTICE_YEARS",
+          "defName": "从业年限",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "POLITICAL",
+          "defName": "政治面貌",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Political",
+          "isStandard": true
+        },
+        {
+          "defKey": "MARITAL",
+          "defName": "婚姻状况",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "‘UNMARRIED’",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Marital",
+          "isStandard": true
+        },
+        {
+          "defKey": "AVATAR",
+          "defName": "头像",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "INTRO",
+          "defName": "介绍",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "900",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DescText"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": [
+        {
+          "myField": "COLLEGE_ID",
+          "refEntity": "SIMS_COLLEGE",
+          "refField": "COLLEGE_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        }
+      ]
+    },
+    {
+      "defKey": "SIMS_LESSON",
+      "defName": "课程",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "LESSON_ID",
+          "defName": "课程ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "LESSON_NAME",
+          "defName": "课程名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "INTRO",
+          "defName": "课程说明",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "900",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DescText"
+        },
+        {
+          "defKey": "HOURS",
+          "defName": "学时",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "SCORE",
+          "defName": "学分",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": []
+    },
+    {
+      "defKey": "SIMS_INSTRUCT",
+      "defName": "授课",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "INSTRUCT_ID",
+          "defName": "授课号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "CLASS_ID",
+          "defName": "班级ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "LESSON_ID",
+          "defName": "课程号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "TEACHER_ID",
+          "defName": "教师ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": [
+        {
+          "myField": "LESSON_ID",
+          "refEntity": "SIMS_LESSON",
+          "refField": "LESSON_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        },
+        {
+          "myField": "LESSON_ID",
+          "refEntity": "SIMS_TEACHER",
+          "refField": "TEACHER_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        },
+        {
+          "myField": "CLASS_ID",
+          "refEntity": "SIMS_CLASS",
+          "refField": "CLASS_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        }
+      ]
+    },
+    {
+      "defKey": "SIMS_EXAM",
+      "defName": "考试",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "EXAM_ID",
+          "defName": "考试记录ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": true,
+          "notNull": true,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "STUDENT_ID",
+          "defName": "学生ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "LESSON_ID",
+          "defName": "课程ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "EXAM_DATE",
+          "defName": "考试日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "EXAM_NAME",
+          "defName": "考试名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name"
+        },
+        {
+          "defKey": "EXAM_SCORE",
+          "defName": "考试分数",
+          "comment": "",
+          "type": "NUMBER",
+          "len": "32",
+          "scale": "8",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Double"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true
+        }
+      ],
+      "correlations": [
+        {
+          "myField": "LESSON_ID",
+          "refEntity": "SIMS_LESSON",
+          "refField": "LESSON_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        },
+        {
+          "myField": "STUDENT_ID",
+          "refEntity": "SIMS_STUDENT",
+          "refField": "STUDENT_ID",
+          "myRows": "n",
+          "refRows": "1",
+          "innerType": ""
+        }
+      ]
+    }
+  ],
+  "views": [
+    {
+      "defKey": "SMIS_STUDENT_EXAM",
+      "defName": "学生考试",
+      "comment": "",
+      "properties": {
+        "partitionBy": ""
+      },
+      "nameTemplate": "{defKey}[{defName}]",
+      "headers": [
+        {
+          "refKey": "hideInGraph",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "refEntity",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defName",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "primaryKey",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "notNull",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "autoIncrement",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "domain",
+          "hideInGraph": false
+        },
+        {
+          "refKey": "type",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "len",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "scale",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "remark",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "refDict",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "defaultValue",
+          "hideInGraph": true
+        },
+        {
+          "refKey": "isStandard",
+          "hideInGraph": false
+        }
+      ],
+      "fields": [
+        {
+          "defKey": "STUDENT_ID",
+          "defName": "学生ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey",
+          "refEntity": "SIMS_STUDENT",
+          "refEntityField": "STUDENT_ID"
+        },
+        {
+          "defKey": "STUDENT_NAME",
+          "defName": "学生姓名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name",
+          "refEntity": "SIMS_STUDENT",
+          "refEntityField": "STUDENT_NAME"
+        },
+        {
+          "defKey": "MOBILE_PHONE",
+          "defName": "手机号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString",
+          "refEntity": "SIMS_STUDENT",
+          "refEntityField": "MOBILE_PHONE"
+        },
+        {
+          "defKey": "GENDER",
+          "defName": "性别",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Gender",
+          "refEntity": "SIMS_STUDENT",
+          "refEntityField": "GENDER"
+        },
+        {
+          "defKey": "LESSON_NAME",
+          "defName": "课程名",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 90,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Name",
+          "refEntity": "SIMS_LESSON",
+          "refEntityField": "LESSON_NAME"
+        },
+        {
+          "defKey": "LESSON_ID",
+          "defName": "课程ID",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "IdOrKey",
+          "refEntity": "SIMS_LESSON",
+          "refEntityField": "LESSON_ID"
+        },
+        {
+          "defKey": "EXAM_DATE",
+          "defName": "考试日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime",
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "EXAM_DATE"
+        },
+        {
+          "defKey": "EXAM_SCORE",
+          "defName": "考试分数",
+          "comment": "",
+          "type": "NUMBER",
+          "len": "32",
+          "scale": "8",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Double",
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "EXAM_SCORE"
+        },
+        {
+          "defKey": "TENANT_ID",
+          "defName": "租户号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "domain": "IdOrKey",
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "TENANT_ID"
+        },
+        {
+          "defKey": "REVISION",
+          "defName": "乐观锁",
+          "comment": "",
+          "domain": "Int",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "REVISION"
+        },
+        {
+          "defKey": "CREATED_BY",
+          "defName": "创建人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "CREATED_BY"
+        },
+        {
+          "defKey": "CREATED_TIME",
+          "defName": "创建时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "CREATED_TIME"
+        },
+        {
+          "defKey": "UPDATED_BY",
+          "defName": "更新人",
+          "comment": "",
+          "domain": "IdOrKey",
+          "type": "VARCHAR",
+          "len": 32,
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "UPDATED_BY"
+        },
+        {
+          "defKey": "UPDATED_TIME",
+          "defName": "更新时间",
+          "comment": "",
+          "domain": "DateTime",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": true,
+          "refEntity": "SIMS_EXAM",
+          "refEntityField": "UPDATED_TIME"
+        }
+      ],
+      "correlations": [],
+      "refEntities": [
+        "SIMS_STUDENT",
+        "SIMS_EXAM",
+        "SIMS_LESSON"
+      ]
+    }
+  ],
+  "dicts": [
+    {
+      "defKey": "Gender",
+      "defName": "性别",
+      "intro": "",
+      "items": [
+        {
+          "defKey": "M",
+          "defName": "男",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "1"
+        },
+        {
+          "defKey": "F",
+          "defName": "女",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "2"
+        },
+        {
+          "defKey": "U",
+          "defName": "未知",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "3"
+        }
+      ]
+    },
+    {
+      "defKey": "Political",
+      "defName": "政治面貌",
+      "intro": "",
+      "items": [
+        {
+          "defKey": "10",
+          "defName": "共青团员",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "20",
+          "defName": "中共党员",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "30",
+          "defName": "民主党派",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "40",
+          "defName": "群众",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "90",
+          "defName": "未知",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        }
+      ]
+    },
+    {
+      "defKey": "Marital",
+      "defName": "婚姻状况",
+      "intro": "婚姻状况的码表",
+      "items": [
+        {
+          "defKey": "UNMARRIED",
+          "defName": "未婚",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "1"
+        },
+        {
+          "defKey": "MARRIED",
+          "defName": "已婚",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "2"
+        },
+        {
+          "defKey": "WIDOWED",
+          "defName": "丧偶",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "3"
+        },
+        {
+          "defKey": "DIVORCE",
+          "defName": "离婚",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "4"
+        },
+        {
+          "defKey": "UNSPECIFIED",
+          "defName": "未说明",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "5"
+        }
+      ]
+    },
+    {
+      "defKey": "StudentStatus",
+      "defName": "学生状态",
+      "intro": "",
+      "items": [
+        {
+          "defKey": "Normal",
+          "defName": "正常",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "1"
+        },
+        {
+          "defKey": "Graduated",
+          "defName": "毕业",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "2"
+        },
+        {
+          "defKey": "Studied",
+          "defName": "肄业",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "3"
+        },
+        {
+          "defKey": "Stop",
+          "defName": "休学",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": "",
+          "sort": "4"
+        }
+      ]
+    },
+    {
+      "defKey": "GBNation",
+      "defName": "民族",
+      "intro": "",
+      "items": [
+        {
+          "defKey": "01",
+          "defName": "汉族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "02",
+          "defName": "蒙古族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "03",
+          "defName": "回族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "04",
+          "defName": "藏族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "05",
+          "defName": "维吾尔族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "06",
+          "defName": "苗族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "07",
+          "defName": "彝族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "08",
+          "defName": "壮族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "09",
+          "defName": "布依族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "10",
+          "defName": "朝鲜族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        },
+        {
+          "defKey": "11",
+          "defName": "满族",
+          "intro": "",
+          "parentKey": "",
+          "enabled": true,
+          "attr1": "",
+          "attr2": "",
+          "attr3": ""
+        }
+      ]
+    }
+  ],
+  "viewGroups": [],
+  "dataTypeMapping": {
+    "referURL": "",
+    "mappings": [
+      {
+        "defKey": "string",
+        "defName": "字串",
+        "JAVA": "String",
+        "ORACLE": "VARCHAR2",
+        "MYSQL": "VARCHAR",
+        "SQLServer": "VARCHAR",
+        "PostgreSQL": "VARCHAR"
+      },
+      {
+        "defKey": "double",
+        "defName": "小数",
+        "JAVA": "Double",
+        "ORACLE": "DECIMAL",
+        "MYSQL": "NUMBER",
+        "SQLServer": "DECIMAL",
+        "PostgreSQL": "NUMERIC"
+      },
+      {
+        "defKey": "int",
+        "defName": "整数",
+        "JAVA": "Integer",
+        "ORACLE": "INT",
+        "MYSQL": "INT",
+        "SQLServer": "INT",
+        "PostgreSQL": "INTEGER"
+      },
+      {
+        "defKey": "date",
+        "defName": "日期",
+        "JAVA": "Date",
+        "ORACLE": "DATE",
+        "MYSQL": "DATETIME",
+        "SQLServer": "DATETIME",
+        "PostgreSQL": "DATE"
+      },
+      {
+        "defKey": "bytes",
+        "defName": "二进制",
+        "JAVA": "byte[]",
+        "ORACLE": "BLOB",
+        "MYSQL": "BLOB",
+        "PostgreSQL": "BYTEA",
+        "SQLServer": "VARBINARY"
+      },
+      {
+        "defKey": "largeText",
+        "defName": "大文本",
+        "JAVA": "String",
+        "ORACLE": "CLOB",
+        "MYSQL": "TEXT",
+        "SQLServer": "TEXT",
+        "PostgreSQL": "TEXT"
+      }
+    ]
+  },
+  "domains": [
+    {
+      "defKey": "DefaultString",
+      "defName": "默认字串",
+      "applyFor": "string",
+      "len": "60",
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "IdOrKey",
+      "defName": "主键标识",
+      "applyFor": "string",
+      "len": 32,
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "Name",
+      "defName": "名称",
+      "applyFor": "string",
+      "len": 90,
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "Int",
+      "defName": "整数",
+      "applyFor": "int",
+      "len": "",
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "Double",
+      "defName": "小数",
+      "applyFor": "double",
+      "len": "32",
+      "scale": "8",
+      "uiHint": {}
+    },
+    {
+      "defKey": "Money",
+      "defName": "金额",
+      "applyFor": "double",
+      "len": 32,
+      "scale": 8,
+      "uiHint": {}
+    },
+    {
+      "defKey": "DateTime",
+      "defName": "日期时间",
+      "applyFor": "date",
+      "len": "",
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "YesNo",
+      "defName": "是否",
+      "applyFor": "string",
+      "len": "1",
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "Dict",
+      "defName": "数据字典",
+      "applyFor": "string",
+      "len": "32",
+      "scale": "",
+      "uiHint": {}
+    },
+    {
+      "defKey": "DescText",
+      "defName": "描述文本",
+      "applyFor": "string",
+      "len": "900",
+      "scale": "",
+      "uiHint": {}
+    }
+  ],
+  "diagrams": [
+    {
+      "defKey": "TableRelations",
+      "defName": "数据表关系图",
+      "canvasData": {
+        "cells": [
+          {
+            "id": "de986735-cd84-4bd5-b50f-6b5a70df984d",
+            "shape": "group",
+            "position": {
+              "x": -40,
+              "y": -40
+            },
+            "label": "学院设置部分",
+            "size": {
+              "width": 910,
+              "height": 760
+            },
+            "children": [
+              "444bdcfa-cc31-4b36-892b-9caef73cc863",
+              "4a31fc9b-4f5a-4f2c-880b-409d433ba848",
+              "9972b579-d4c5-4520-9202-7a57bf539151",
+              "4bbe78ce-9511-471b-bea0-bcdfa333b636",
+              "b9e17f34-b032-4b33-b78b-618b7e046614",
+              "925b71be-5cf6-48d7-aea2-5c49e68a5d8b",
+              "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+              "914c8f40-8cff-49ed-86a9-4dcad63ad668",
+              "979dfa9f-475a-4be8-8ddc-1f2500ff212b",
+              "56317816-819f-41ea-a6ef-bdcd0027fb68",
+              "f03ab359-7568-4402-bc56-4593bf5e1420",
+              "5428380e-8314-4f6f-9048-43eff1b48ee5"
+            ]
+          },
+          {
+            "id": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd",
+            "shape": "group",
+            "position": {
+              "x": 883.9999999999982,
+              "y": -40
+            },
+            "label": "学生行为",
+            "size": {
+              "width": 860,
+              "height": 760
+            },
+            "children": [
+              "9a5658de-7e28-4815-95c2-ccf5ff90e6c1",
+              "26b28925-27ed-488d-b20d-2abbcafa5057",
+              "942a65c8-c294-4ea4-98ec-1df43daa3ff5",
+              "8fad7c2e-d083-4589-b938-071541a6cea1",
+              "d6502944-49c1-4584-a595-c414134a8773",
+              "b9d16e42-dfdd-479f-8a39-79d6c3acc6a9"
+            ]
+          },
+          {
+            "id": "26b28925-27ed-488d-b20d-2abbcafa5057",
+            "shape": "table",
+            "position": {
+              "x": 1341,
+              "y": 19.99999999999801
+            },
+            "count": 0,
+            "originKey": "SIMS_EXAM",
+            "fillColor": "#9acc98",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd"
+          },
+          {
+            "id": "942a65c8-c294-4ea4-98ec-1df43daa3ff5",
+            "shape": "table",
+            "position": {
+              "x": 1341,
+              "y": 231.499999999998
+            },
+            "count": 1,
+            "originKey": "SIMS_LESSON",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd"
+          },
+          {
+            "id": "f03ab359-7568-4402-bc56-4593bf5e1420",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "56317816-819f-41ea-a6ef-bdcd0027fb68",
+              "port": "COLLEGE_ID%out"
+            },
+            "target": {
+              "cell": "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+              "port": "COLLEGE_ID%in"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "3febdf30-c87b-42b6-b4f0-4e4af1bf70c8",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+              "port": "CLASS_ID%out"
+            },
+            "target": {
+              "cell": "9a5658de-7e28-4815-95c2-ccf5ff90e6c1",
+              "port": "CLASS_ID%in"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 880,
+                "y": 106
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "979dfa9f-475a-4be8-8ddc-1f2500ff212b",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "9972b579-d4c5-4520-9202-7a57bf539151",
+              "port": "MAJOR_ID%out"
+            },
+            "target": {
+              "cell": "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+              "port": "MAJOR_ID%in"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 450.00000000000165,
+                "y": 82.99999999999801
+              }
+            ],
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "b9e17f34-b032-4b33-b78b-618b7e046614",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "4a31fc9b-4f5a-4f2c-880b-409d433ba848",
+              "port": "LESSON_ID%out"
+            },
+            "target": {
+              "cell": "4bbe78ce-9511-471b-bea0-bcdfa333b636",
+              "port": "LESSON_ID%in"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 450.00000000000165,
+                "y": 328.999999999998
+              }
+            ],
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "925b71be-5cf6-48d7-aea2-5c49e68a5d8b",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "444bdcfa-cc31-4b36-892b-9caef73cc863",
+              "port": "TEACHER_ID%out"
+            },
+            "target": {
+              "cell": "4bbe78ce-9511-471b-bea0-bcdfa333b636",
+              "port": "LESSON_ID%out"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "b9d16e42-dfdd-479f-8a39-79d6c3acc6a9",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "942a65c8-c294-4ea4-98ec-1df43daa3ff5",
+              "port": "LESSON_ID%out"
+            },
+            "target": {
+              "cell": "26b28925-27ed-488d-b20d-2abbcafa5057",
+              "port": "LESSON_ID%out"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 1700,
+                "y": 190
+              }
+            ],
+            "fillColor": "#ACDAFC",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd"
+          },
+          {
+            "id": "5428380e-8314-4f6f-9048-43eff1b48ee5",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "56317816-819f-41ea-a6ef-bdcd0027fb68",
+              "port": "COLLEGE_ID%in"
+            },
+            "target": {
+              "cell": "444bdcfa-cc31-4b36-892b-9caef73cc863",
+              "port": "COLLEGE_ID%in"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 1.6484591469634324e-12,
+                "y": 629.999999999998
+              },
+              {
+                "x": 460.00000000000165,
+                "y": 629.999999999998
+              }
+            ],
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "d6502944-49c1-4584-a595-c414134a8773",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "9a5658de-7e28-4815-95c2-ccf5ff90e6c1",
+              "port": "STUDENT_ID%out"
+            },
+            "target": {
+              "cell": "26b28925-27ed-488d-b20d-2abbcafa5057",
+              "port": "STUDENT_ID%in"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 1300,
+                "y": 106
+              }
+            ],
+            "fillColor": "#ACDAFC",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd"
+          },
+          {
+            "id": "914c8f40-8cff-49ed-86a9-4dcad63ad668",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+              "port": "CLASS_ID%in"
+            },
+            "target": {
+              "cell": "4bbe78ce-9511-471b-bea0-bcdfa333b636",
+              "port": "CLASS_ID%in"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "56317816-819f-41ea-a6ef-bdcd0027fb68",
+            "shape": "table",
+            "position": {
+              "x": 34.50000000000165,
+              "y": 19.99999999999801
+            },
+            "count": 0,
+            "originKey": "SIMS_COLLEGE",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "8fad7c2e-d083-4589-b938-071541a6cea1",
+            "shape": "edit-node",
+            "position": {
+              "x": 1122,
+              "y": 459.999999999998
+            },
+            "label": "课程信息表为镜像，所以后面的“:1\"标识，是指第1个镜像副本，仅关系图需要",
+            "fontColor": "#f62b07",
+            "fillColor": "#fcfcac",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd",
+            "size": {
+              "width": 460,
+              "height": 90
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "9a5658de-7e28-4815-95c2-ccf5ff90e6c1",
+            "shape": "table",
+            "position": {
+              "x": 930,
+              "y": 19.99999999999801
+            },
+            "count": 0,
+            "originKey": "SIMS_STUDENT",
+            "fontColor": "#0d0d0d",
+            "fillColor": "#c00000",
+            "parent": "02b64cef-3ee3-48a5-9867-9dc4e9726bfd"
+          },
+          {
+            "id": "9972b579-d4c5-4520-9202-7a57bf539151",
+            "shape": "table",
+            "position": {
+              "x": 58.50000000000165,
+              "y": 245.999999999998
+            },
+            "count": 0,
+            "originKey": "SIMS_MAJOR",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "4a31fc9b-4f5a-4f2c-880b-409d433ba848",
+            "shape": "table",
+            "position": {
+              "x": 20.00000000000165,
+              "y": 459.999999999998
+            },
+            "count": 0,
+            "originKey": "SIMS_LESSON",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "444bdcfa-cc31-4b36-892b-9caef73cc863",
+            "shape": "table",
+            "position": {
+              "x": 475.00000000000165,
+              "y": 414.999999999998
+            },
+            "count": 0,
+            "originKey": "SIMS_TEACHER",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "4bbe78ce-9511-471b-bea0-bcdfa333b636",
+            "shape": "table",
+            "position": {
+              "x": 551.0000000000016,
+              "y": 242.999999999998
+            },
+            "count": 0,
+            "originKey": "SIMS_INSTRUCT",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          },
+          {
+            "id": "6210b0eb-8566-4b64-885b-f1b00d6078d7",
+            "shape": "table",
+            "position": {
+              "x": 521.0000000000016,
+              "y": 19.99999999999801
+            },
+            "count": 0,
+            "originKey": "SIMS_CLASS",
+            "fontColor": "#555555",
+            "fillColor": "#dce775",
+            "parent": "de986735-cd84-4bd5-b50f-6b5a70df984d"
+          }
+        ]
+      }
+    },
+    {
+      "defKey": "KeyEntities",
+      "defName": "关键业务对象",
+      "canvasData": {
+        "cells": [
+          {
+            "id": "ac8ecb2d-7944-414d-b6ea-e69d064255c1",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "892b4b11-4750-4238-9c86-bb20192eb1bb",
+              "port": "out2"
+            },
+            "target": {
+              "cell": "563779f2-b18d-4158-b78b-36fa30b4b371",
+              "port": "in2"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "ef8fc07c-b10b-4167-9760-1c46e2bb06d9",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "563779f2-b18d-4158-b78b-36fa30b4b371",
+              "port": "out2"
+            },
+            "target": {
+              "cell": "1fcc5b1b-5a4e-4fc5-af7b-13e1eaff7133",
+              "port": "in"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "ef0d6ba9-b285-435f-8331-f1196a5c9958",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "1380680e-72b6-42cc-b634-b92b155c38c5",
+              "port": "out2"
+            },
+            "target": {
+              "cell": "563779f2-b18d-4158-b78b-36fa30b4b371",
+              "port": "in3"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 270,
+                "y": 160
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "734f21dd-e215-4a14-90ab-f18b0df70d61",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "02b5b284-86e8-413b-a2ce-d2c052e13c94",
+              "port": "out2"
+            },
+            "target": {
+              "cell": "dc34a8bc-62a9-4a97-bc60-7195d1aa66e8",
+              "port": "in2"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 270,
+                "y": 298
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "b291fcaf-a0b5-4975-a64b-97a5ee028887",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "34f587ad-faf7-4fa9-948d-e623648d77b9",
+              "port": "out2"
+            },
+            "target": {
+              "cell": "dc34a8bc-62a9-4a97-bc60-7195d1aa66e8",
+              "port": "out2"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 450,
+                "y": 298
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "e726ad52-1294-45c1-9965-e3bccb6134ac",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "02b5b284-86e8-413b-a2ce-d2c052e13c94",
+              "port": "bottom2"
+            },
+            "target": {
+              "cell": "e63e919b-f925-4dca-8d73-9279ab06d72c",
+              "port": "bottom2"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 749,
+                "y": 480
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "2e2dc3ab-172a-4dfb-9711-c7be64fd2fcd",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "892b4b11-4750-4238-9c86-bb20192eb1bb",
+              "port": "in2"
+            },
+            "target": {
+              "cell": "34f587ad-faf7-4fa9-948d-e623648d77b9",
+              "port": "bottom2"
+            },
+            "relation": "1:n",
+            "vertices": [
+              {
+                "x": 130,
+                "y": 460
+              }
+            ],
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "3f42f177-a03f-4024-8470-5fe98923ac20",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "1fcc5b1b-5a4e-4fc5-af7b-13e1eaff7133",
+              "port": "out"
+            },
+            "target": {
+              "cell": "e63e919b-f925-4dca-8d73-9279ab06d72c",
+              "port": "top2"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "d0c269e7-1260-44df-b7df-631dd5d7754f",
+            "shape": "erdRelation",
+            "source": {
+              "cell": "563779f2-b18d-4158-b78b-36fa30b4b371",
+              "port": "bottom2"
+            },
+            "target": {
+              "cell": "dc34a8bc-62a9-4a97-bc60-7195d1aa66e8",
+              "port": "top2"
+            },
+            "relation": "1:n",
+            "fillColor": "#ACDAFC"
+          },
+          {
+            "id": "1380680e-72b6-42cc-b634-b92b155c38c5",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 160,
+              "y": 248
+            },
+            "label": "专业",
+            "fillColor": "#acdafc",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "e63e919b-f925-4dca-8d73-9279ab06d72c",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 709,
+              "y": 188
+            },
+            "label": "考试",
+            "fillColor": "#ff8a65",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "563779f2-b18d-4158-b78b-36fa30b4b371",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 326,
+              "y": 110
+            },
+            "label": "班级",
+            "fillColor": "#37d67a",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "1fcc5b1b-5a4e-4fc5-af7b-13e1eaff7133",
+            "shape": "edit-node",
+            "position": {
+              "x": 501,
+              "y": 113
+            },
+            "label": "学生",
+            "fillColor": "#758ae7",
+            "size": {
+              "width": 140,
+              "height": 210
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "dc34a8bc-62a9-4a97-bc60-7195d1aa66e8",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 326,
+              "y": 268
+            },
+            "label": "授课",
+            "fillColor": "#acdafc",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "34f587ad-faf7-4fa9-948d-e623648d77b9",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 326,
+              "y": 369
+            },
+            "label": "教师",
+            "fillColor": "#acdafc",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "02b5b284-86e8-413b-a2ce-d2c052e13c94",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 160,
+              "y": 369
+            },
+            "label": "课程",
+            "fillColor": "#acdafc",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          },
+          {
+            "id": "892b4b11-4750-4238-9c86-bb20192eb1bb",
+            "shape": "edit-node-circle",
+            "position": {
+              "x": 160,
+              "y": 110
+            },
+            "label": "学院",
+            "fillColor": "#acdafc",
+            "size": {
+              "width": 80,
+              "height": 60
+            },
+            "ports": {
+              "groups": {
+                "in": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "left"
+                  }
+                },
+                "out": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "right"
+                  }
+                },
+                "top": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "top"
+                  }
+                },
+                "bottom": {
+                  "attrs": {
+                    "fo": {
+                      "width": 8,
+                      "height": 8,
+                      "x": -4,
+                      "y": -4,
+                      "magnet": "true",
+                      "style": {
+                        "visibility": "hidden"
+                      }
+                    }
+                  },
+                  "zIndex": 3,
+                  "position": {
+                    "name": "bottom"
+                  }
+                }
+              },
+              "items": [
+                {
+                  "group": "in",
+                  "id": "in"
+                },
+                {
+                  "group": "in",
+                  "id": "in2"
+                },
+                {
+                  "group": "in",
+                  "id": "in3"
+                },
+                {
+                  "group": "out",
+                  "id": "out"
+                },
+                {
+                  "group": "out",
+                  "id": "out2"
+                },
+                {
+                  "group": "out",
+                  "id": "out3"
+                },
+                {
+                  "group": "top",
+                  "id": "top"
+                },
+                {
+                  "group": "top",
+                  "id": "top2"
+                },
+                {
+                  "group": "top",
+                  "id": "top3"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom2"
+                },
+                {
+                  "group": "bottom",
+                  "id": "bottom3"
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ],
+  "standardFields": [
+    {
+      "defKey": "personInfo",
+      "defName": "个人基本信息要素",
+      "fields": [
+        {
+          "defKey": "ID_CARD_NO",
+          "defName": "身份证号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "MOBILE_PHONE",
+          "defName": "手机号",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "GENDER",
+          "defName": "性别",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Gender"
+        },
+        {
+          "defKey": "BIRTH",
+          "defName": "出生日期",
+          "comment": "",
+          "type": "DATETIME",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DateTime"
+        },
+        {
+          "defKey": "AVATAR",
+          "defName": "头像",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "HEIGHT",
+          "defName": "身高",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "WEIGHT",
+          "defName": "体重",
+          "comment": "",
+          "type": "INT",
+          "len": "",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Int"
+        },
+        {
+          "defKey": "NATION",
+          "defName": "名族",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "GBNation"
+        },
+        {
+          "defKey": "POLITICAL",
+          "defName": "政治面貌",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Political"
+        },
+        {
+          "defKey": "MARITAL",
+          "defName": "婚姻状况",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict",
+          "refDict": "Marital"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_PROVINCE",
+          "defName": "籍贯（省）",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_CITY",
+          "defName": "籍贯（市）",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "32",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "Dict"
+        },
+        {
+          "defKey": "DOMICILE_PLACE_ADDRESS",
+          "defName": "户籍地址",
+          "comment": "",
+          "type": "VARCHAR",
+          "len": "60",
+          "scale": "",
+          "primaryKey": false,
+          "notNull": false,
+          "autoIncrement": false,
+          "defaultValue": "",
+          "hideInGraph": false,
+          "domain": "DefaultString"
+        }
+      ]
+    }
+  ]
+}

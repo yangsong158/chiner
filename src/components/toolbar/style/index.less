@@ -1,0 +1,49 @@
+@import "~style";
+
+.@{prefix}-toolbar {
+  background: linear-gradient(180deg, #F0F3F9 0%, #DEE0E4 100%);
+  width: 100%;
+  height: @toolbar-opt-height;
+  padding: 2px 0;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  -webkit-app-region: drag;
+  i {
+    color: @third-font-color;
+    -webkit-app-region: no-drag;
+  }
+  &-title {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    padding: 0 10px;
+    color: @font-color;
+    & > span:first-child {
+      display: inline-block;
+      width: 16px;
+      height: 16px;
+      background-image: url("logo.png");
+      background-size: cover;
+      margin-right: 3px;
+    }
+  }
+  &-info {
+    width: 400px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    margin-left: 10px;
+  }
+  &-opt {
+    padding: 0 10px;
+    i {
+      padding: 0 5px;
+      &:hover {
+        color: @font-color;
+        cursor: pointer;
+      }
+    }
+  }
+}

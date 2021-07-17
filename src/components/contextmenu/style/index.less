@@ -1,0 +1,30 @@
+@import "~style";
+
+.@{prefix}-contextmenu {
+  &-item {
+    i {
+      margin: 0 10px;
+    }
+  }
+  &-hidden {
+    display: none;
+  }
+  &-show {
+    box-shadow: 0 2px 15px 0 rgba(146, 161, 170, 0.2);
+    border: 1px solid @primary-border-color;
+    outline-style: none;
+    z-index: 999;
+    background: @background-color;
+    min-width: 200px;
+    position: fixed;
+    color: @font-color;
+    li {
+      padding: 5px;
+    }
+    li:hover {
+      cursor: pointer;
+      color: @primary-color;
+      background: @third-primary-color;
+    }
+  }
+}

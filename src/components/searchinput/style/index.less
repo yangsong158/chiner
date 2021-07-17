@@ -1,0 +1,33 @@
+@import "~style";
+
+.@{prefix}-search-input {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  padding: 2px 4px;
+  background: @four-font-color;
+  color: @third-font-color;
+  border: none;
+  border-radius: 10px;
+  &-icon {
+    font-size: 16px;
+  }
+  input {
+    font-size: 11px;
+    padding-left: 8px;
+    border: 1px solid transparent;
+    &:hover {
+      border: 1px solid transparent;
+    }
+    &:focus {
+      border: 1px solid transparent;
+      box-shadow: 0 0 0 2px transparent;
+    }
+    &::placeholder {
+      color: @second-font-color;
+    }
+    background: transparent;
+    outline: none;
+    color: @font-color;
+  }
+}

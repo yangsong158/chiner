@@ -1,0 +1,35 @@
+@import "~style";
+
+.@{prefix}-tree {
+  &-container {
+    &-ul {
+      li {
+        padding: 2px;
+      }
+      &-parent {
+        &-show {
+          & > i {
+            cursor: pointer;
+            margin-right: 2px;
+            transform: rotate(0deg);
+          }
+        }
+        &-hidden {
+          & > i {
+            cursor: pointer;
+            margin-right: 2px;
+            transform: rotate(-90deg);
+          }
+        }
+      }
+      &-child {
+        &-show {
+          display: inline-block;
+        }
+        &-hidden {
+          display: none;
+        }
+      }
+    }
+  }
+}

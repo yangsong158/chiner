@@ -1,0 +1,110 @@
+@import "~style";
+
+@offset-header: @toolbar-height + @menu-header + @toolbar-opt-height;
+
+.@{prefix}-menu-container {
+  &-fold {
+    background: @background-color;
+    user-select: none;
+    width: 100%;
+    min-width: @menu-width;
+    overflow: auto;
+    height: calc(~'100vh' - @offset-header);
+    & > ul {
+      display: inline-block;
+      min-width: 100%;
+      li {
+        position: relative;
+        white-space: nowrap;
+        display: block;
+        padding: 5px 5px 5px 25px;
+        &:hover {
+          .@{prefix}-menu-container-fold-item-drag {
+            opacity: 1;
+          }
+        }
+      }
+    }
+    &-item {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      width: 100%;
+      position: relative;
+      padding: 5px;
+      white-space: nowrap;
+      &-drag {
+        background: @background-color;
+        position: absolute;
+        padding: 5px 20px;
+        right: 0;
+        top: 0;
+        display: flex;
+        opacity: 0;
+        flex-direction: row;
+        flex-wrap: wrap;
+        width: 50px;
+        height: 31px;
+        cursor: grabbing;
+        & > span {
+          display: inline-block;
+          width: 3px;
+          height: 3px;
+          background-color: @font-color;
+          margin: 2px 0 0 2px;
+          opacity: 0.48;
+        }
+      }
+      &-selected {
+        background: @third-primary-color;
+        color: @primary-color;
+      }
+      i:first-child {
+        width: 14px;
+        margin-left: 8px;
+        font-size: 14px;
+      }
+      span:first-child {
+        width: 14px;
+        height: 14px;
+        margin-left: 8px;
+      }
+      &-name {
+        margin-left: 10px;
+        &-parent {
+          font-size: 14px;
+          font-weight: bold;
+        }
+        &-child {
+          font-size: 12px;
+        }
+      }
+      &-right {
+        transition: transform 0.3s;
+        position: absolute;
+        right: 20px;
+        top: 8px;
+      }
+      &-child {
+        &-selected {
+          span {
+            color: @primary-color;
+          }
+          background: @third-primary-color;
+        }
+        &-hidden {
+          display: none !important;
+        }
+        &-insert {
+          border-bottom: 2px dashed @primary-color !important;
+        }
+        &-show {
+          display: block !important;
+        }
+      }
+    }
+  }
+  &-unfold {
+
+  }
+}
