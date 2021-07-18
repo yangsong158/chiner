@@ -275,7 +275,8 @@ const Index = React.memo(({getUserData, open, config, common, prefix, projectInf
     cavRef.redo();
   };
   const exportWord = () => {
-    selectWordFile(dataSourceRef.current)
+    if (projectInfo) {
+      selectWordFile(dataSourceRef.current)
         .then(([dir, template]) => {
           //restProps.openLoading(FormatMessage.string({id: 'toolbar.exportWord'}));
           restProps.openLoading(FormatMessage.string({id: 'toolbar.exportWordStep1'}));
@@ -291,7 +292,7 @@ const Index = React.memo(({getUserData, open, config, common, prefix, projectInf
               if (result.status === 'FAILED') {
                 const termReady = (term) => {
                   term.write(typeof result.body === 'object' ? JSON.stringify(result.body, null, 2)
-                      : result.body);
+                    : result.body);
                 };
                 restProps.closeLoading();
                 Modal.error({
@@ -314,7 +315,13 @@ const Index = React.memo(({getUserData, open, config, common, prefix, projectInf
               }
             });
           });
-    });
+        });
+    } else {
+      Modal.error({
+        title: FormatMessage.string({id: 'optFail'}),
+        message: FormatMessage.string({id: 'toolbar.exportWordTplProject'}),
+      });
+    }
   };
   const exportImg = () => {
     const cavRef = getCurrentCav();

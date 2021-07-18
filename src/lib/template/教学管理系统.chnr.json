@@ -5370,13 +5370,13 @@
   "dbConn": [
     {
       "defKey": "89F8A23D-7DC0-4A22-B399-B314B82834AC",
-      "defName": "fisok",
+      "defName": "demo",
       "type": "",
       "properties": {
         "driver_class_name": "com.mysql.jdbc.Driver",
-        "url": "jdbc:mysql://127.0.0.1:3306/vbcms?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC",
-        "password": "fisok2020",
-        "username": "fisok"
+        "url": "jdbc:mysql://127.0.0.1:3306/demo?characterEncoding=UTF-8&useSSL=false&useUnicode=true&serverTimezone=UTC",
+        "password": "demo",
+        "username": "demo"
       }
     }
   ]

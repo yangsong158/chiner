@@ -70,8 +70,16 @@ export const img = (data, dataSource, needCalc = true, groups) => {
 };
 
 export const imgAll = (dataSource) => {
+  if ((dataSource.diagrams || []).length === 0){
+    return new Promise((res, rej) => {
+      saveTempImages([])
+        .then((dir) => {
+          res(dir);
+        }).catch(err => rej(err));
+    });
+  }
   return new Promise((res, rej) => {
-    Promise.all((dataSource.diagrams || []).map(d => {
+    Promise.all((dataSource.diagrams).map(d => {
       return new Promise((res, rej) => {
         const hiddenPort = {
           attrs: {

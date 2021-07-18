@@ -27,6 +27,7 @@ export default {
         exportImg: '导出当前画布为图片',
         exportSql: '导出DDL',
         exportWord: '导出WORD',
+        exportWordTplProject: '模板演示项目无法直接导出WORD，请先将模板项目另存为至本地',
         exportWordStep1: '[1/2] 1.正在生成关系图...',
         exportWordStep2: '[2/2] 2.正在生成WORD...',
         exportSuccess: '导出成功！',
