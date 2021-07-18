@@ -27,6 +27,7 @@ export default {
         exportImg: 'export the current canvas as a picture',
         exportSql: 'export DDL',
         exportWord: 'export WORD',
+        exportWordTplProject: 'The template demo project cannot be exported directly to word. Please save the template project locally first',
         exportWordStep1: '[1/2] 1. Generating diagram...',
         exportWordStep2: '[2/2] 2. Generating word...',
         exportSuccess: 'Export Success',

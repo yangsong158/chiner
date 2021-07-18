@@ -1,5 +1,5 @@
 /* eslint-disable */
-const {app, BrowserWindow, Menu, nativeImage} = require('electron');
+const {app, BrowserWindow, Menu, nativeImage, ipcMain} = require('electron');
 const path = require('path');
 const url = require('url');
 
@@ -54,7 +54,24 @@ function createWindow() {
     // 与此同时，你应该删除相应的元素。
     win = null;
   });
-
+  ipcMain.on("jarPath", (event) => {
+    let jarPath = '';
+    if (process.env.NODE_ENV === 'development') {
+      jarPath = path.join(__dirname, '../public/jar/chiner-java.jar');
+    } else {
+      jarPath = path.join(__dirname, '../../app.asar.unpacked/build/jar/chiner-java.jar')
+    }
+    event.returnValue = jarPath;
+  });
+  ipcMain.on("docx", (event) => {
+    let docx = '';
+    if (process.env.NODE_ENV === 'development') {
+      docx = path.join(__dirname, '../public/file/chiner-docx-tpl.docx');
+    } else {
+      docx = path.join(__dirname, '../../app.asar.unpacked/build/file/chiner-docx-tpl.docx')
+    }
+    event.returnValue = docx;
+  });
   // 设置菜单
   Menu.setApplicationMenu(null);
 }

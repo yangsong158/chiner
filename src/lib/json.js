@@ -7,7 +7,8 @@ import * as _ from 'lodash/object';
 import { projectSuffix } from '../../profile';
 const { execFile } = require('child_process');
 
-const { app, dialog } = require('electron').remote;
+const { ipcRenderer, remote } = require('electron');
+const { app, dialog } = remote;
 
 const user_config = 'user_config.json';
 const project_config = 'project_config.json';
@@ -361,12 +362,7 @@ export const connectDB = (dataSource, params = {}, cmd, cb) => {
     return paramArray.concat(`out=${outFile}`);
   };
   const javaHome = _.get(dataSource, 'profile.javaHome', '');
-  let jar = '';
-  if (process.env.NODE_ENV === 'development') {
-    jar = `${process.cwd()}${path.sep}public${path.sep}jar${path.sep}chiner-java.jar`;
-  } else {
-    jar = `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}jar${path.sep}chiner-java.jar`
-  }
+  const jar = ipcRenderer.sendSync('jarPath');
   const tempValue = javaHome ? `${javaHome}${path.sep}bin${path.sep}java` : 'java';
   const customerDriver = _.get(params, 'customer_driver', '');
   const commend = [
@@ -448,11 +444,7 @@ export const saveTempImages = (images) => {
 };
 
 const getDefaultWordTemplate = () => {
-  if (process.env.NODE_ENV === 'development') {
-    return `${process.cwd()}${path.sep}public${path.sep}file${path.sep}chiner-docx-tpl.docx`;
-  } else {
-    return `${process.cwd()}${path.sep}resources${path.sep}app.asar.unpacked${path.sep}build${path.sep}file${path.sep}chiner-docx-tpl.docx`
-  }
+  return ipcRenderer.sendSync('docx');
 }
 
 export const saveAsWordTemplate = () => {
