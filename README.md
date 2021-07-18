@@ -263,4 +263,6 @@ PDMan原始情况，如下图：
 &nbsp;| &nbsp;后端Java：[查看](https://gitee.com/robergroup/chiner-java.git "查看")
 
 ## 10.2 下载及交流
-[前往下载以及交流](https://gitee.com/robergroup/chiner/releases "前往下载以及交流地址")
+同发知乎: [知乎](https://zhuanlan.zhihu.com/p/390858721)
+
+安装文件下载及交流 [前往下载以及交流](https://gitee.com/robergroup/chiner/releases "前往下载以及交流地址")
